@@ -13,7 +13,6 @@ spring:
           #基本属性
           url: jdbc:mysql://localhost:3306/tson?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
           username: root
-          # 上线需要修改密码为  GpaxpTaKIE22
           password: 970827351
           #配置初始化大小/最小/最大
           initial-size: 1
