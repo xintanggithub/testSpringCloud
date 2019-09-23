@@ -29,7 +29,7 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("接口文档")
-                .description("----")
+                .description("base url : http://www.tsondy.club/")
                 .termsOfServiceUrl("http://www.baidu.com/")
                 .contact("Tson")
                 .version("0.0.1")

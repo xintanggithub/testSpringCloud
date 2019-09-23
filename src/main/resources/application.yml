@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 spring:
     datasource:
         name: mysql_test
@@ -10,7 +9,7 @@ spring:
         druid:
           #监控统计拦截的filters
           filters: stat
-          driver-class-name: com.mysql.jdbc.Driver
+          # driver-class-name: com.mysql.jdbc.Driver
           #基本属性
           url: jdbc:mysql://localhost:3306/tson?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
           username: root
@@ -37,8 +36,6 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.tson.yd.model
-
-
 
 #pagehelper
 pagehelper:
