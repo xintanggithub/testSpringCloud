@@ -4,6 +4,7 @@ public enum LogCode {
     RC_HEAD_PARAMETER_ERROR(1003, "header parameter error, Please check header!"),
     RC_PARAMETER_ERROR(1002, "Parameter error,Please check parameters！"),
     RC_RESULT_EMPTY(1001, "result data is empty"),
+    RC_USER_NONE(7777, "user does not exist!"),
     RC_SUCCESS(200, "success");
 
     private int code;

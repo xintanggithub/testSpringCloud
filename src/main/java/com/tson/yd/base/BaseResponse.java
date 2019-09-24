@@ -36,4 +36,9 @@ public class BaseResponse<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public void setStatus(LogCode logCode) {
+        setResultCode(logCode.getCode());
+        setResultMessage(logCode.getMessage());
+    }
 }
