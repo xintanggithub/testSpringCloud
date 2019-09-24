@@ -9,6 +9,7 @@ import com.tson.yd.base.LogCode;
 import com.tson.yd.dao.UserDao;
 import com.tson.yd.model.UserEntity;
 import com.tson.yd.model.request.InsertUserRequest;
+import com.tson.yd.model.request.UpdateUserRequest;
 import com.tson.yd.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,12 +78,29 @@ public class UserServiceImpl implements UserService {
         String userUserId = UUID.randomUUID().toString();
         UserEntity userEntity = JSON.parseObject(JSON.toJSONString(userRequest), UserEntity.class);
         userEntity.setUserId(userUserId);
-        userEntity.setCreateTime(System.currentTimeMillis()/1000);
-        userEntity.setUpdateTime(System.currentTimeMillis()/1000);
+        userEntity.setUserStatus(1);
+        userEntity.setCreateTime(System.currentTimeMillis() / 1000);
+        userEntity.setUpdateTime(System.currentTimeMillis() / 1000);
         userDao.insertUser(userEntity);
         BaseResponse<String> response = new BaseResponse<>();
         response.setData(userUserId);
         response.setStatus(LogCode.RC_SUCCESS);
+        return response;
+    }
+
+    @Override
+    public BaseResponse updateUser(UpdateUserRequest userEntity) {
+        BaseResponse response = new BaseResponse();
+        if (null != userEntity && !StringUtils.isEmpty(userEntity.getUserId())) {
+            String jsonStr = JSON.toJSONString(userEntity);
+            LOGGER.debug(jsonStr);
+            UserEntity updateUserEntity = JSON.parseObject(jsonStr, UserEntity.class);
+            updateUserEntity.setUpdateTime(System.currentTimeMillis() / 1000);
+            userDao.updateUser(updateUserEntity);
+            response.setStatus(LogCode.RC_SUCCESS);
+        } else {
+            response.setStatus(LogCode.RC_PARAMETER_ERROR);
+        }
         return response;
     }
 

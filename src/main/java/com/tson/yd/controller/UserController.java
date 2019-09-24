@@ -4,6 +4,7 @@ import com.tson.yd.base.BaseResponse;
 import com.tson.yd.base.ListBaseData;
 import com.tson.yd.model.UserEntity;
 import com.tson.yd.model.request.InsertUserRequest;
+import com.tson.yd.model.request.UpdateUserRequest;
 import com.tson.yd.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,6 +40,12 @@ public class UserController {
     @ApiOperation(value = "新增用户", notes = "v1.0.0")
     public BaseResponse<String> insertUser(@RequestBody InsertUserRequest userRequest) {
         return userService.insertUser(userRequest);
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ApiOperation(value = "更新用户信息", notes = "v1.0.0")
+    public BaseResponse updateUser(@RequestBody UpdateUserRequest updateUserRequest) {
+        return userService.updateUser(updateUserRequest);
     }
 
 }

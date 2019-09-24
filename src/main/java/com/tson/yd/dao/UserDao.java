@@ -23,8 +23,16 @@ public interface UserDao {
 
     /**
      * 新增用户数据
+     *
      * @param userEntity 用户数据
      */
     void insertUser(UserEntity userEntity);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userEntity 用户数据
+     */
+    void updateUser(UserEntity userEntity);
 
 }

@@ -13,7 +13,7 @@ public class InsertUserRequest {
     private String img;
 
     @ApiModelProperty(value = "性别")
-    private int sex;
+    private Integer sex;
 
     @ApiModelProperty(value = "省")
     private String province;
@@ -52,11 +52,11 @@ public class InsertUserRequest {
         this.img = img;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

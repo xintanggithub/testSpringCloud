@@ -13,6 +13,9 @@ public class UserEntity extends UpdateUserRequest {
     @ApiModelProperty(value = "更新时间")
     private long updateTime;
 
+    @ApiModelProperty(value = "用户状态 1正常 0删除")
+    private int userStatus;
+
     public long getCreateTime() {
         return createTime;
     }
@@ -27,5 +30,13 @@ public class UserEntity extends UpdateUserRequest {
 
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public int getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(int userStatus) {
+        this.userStatus = userStatus;
     }
 }

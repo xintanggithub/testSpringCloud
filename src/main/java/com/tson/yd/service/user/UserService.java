@@ -4,6 +4,7 @@ import com.tson.yd.base.BaseResponse;
 import com.tson.yd.base.ListBaseData;
 import com.tson.yd.model.UserEntity;
 import com.tson.yd.model.request.InsertUserRequest;
+import com.tson.yd.model.request.UpdateUserRequest;
 
 public interface UserService {
 
@@ -31,5 +32,13 @@ public interface UserService {
      * @return 返回用户ID
      */
     BaseResponse<String> insertUser(InsertUserRequest userRequest);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userEntity 用户数据
+     * @return 返回更新结果
+     */
+    BaseResponse updateUser(UpdateUserRequest userEntity);
 
 }

@@ -19,32 +19,78 @@
         description,
         tel,
         userType,
+        userStatus,
         UNIX_TIMESTAMP(createTime) createTime,
         UNIX_TIMESTAMP(updateTime) updateTime
     </sql>
 
     <select id="queryUsers" resultType="com.tson.yd.model.UserEntity">
         SELECT
-          <include refid="BASE_COLUMN"/>
+        <include refid="BASE_COLUMN"/>
         FROM
-          <include refid="BASE_TABLE"/>
+        <include refid="BASE_TABLE"/>
+        WHERE userStatus = 1
     </select>
 
     <select id="queryUserById" resultType="com.tson.yd.model.UserEntity">
         SELECT
-          <include refid="BASE_COLUMN"/>
+        <include refid="BASE_COLUMN"/>
         FROM
-          <include refid="BASE_TABLE"/>
+        <include refid="BASE_TABLE"/>
         WHERE userId = #{userId}
     </select>
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.tson.yd.model.UserEntity">
         INSERT INTO
-            `user`(userName,userId,img,sex,province,city,area,address,description,tel,createTime,updateTime)
+            `user`(userName, userId, img, sex, province, city, area, address, description, tel, createTime, updateTime)
         VALUES
-        (#{userName},#{userId},#{img},#{sex},#{province},#{city},#{area},#{address},#{description},#{tel},
-         FROM_UNIXTIME(#{createTime}, '%Y-%m-%d %h:%i:%s'),FROM_UNIXTIME(#{updateTime}, '%Y-%m-%d %h:%i:%s'))
+        (#{userName}, #{userId}, #{img}, #{sex}, #{province}, #{city}, #{area}, #{address}, #{description}, #{tel})
     </insert>
+
+    <update id="updateUser" parameterType="com.tson.yd.model.UserEntity">
+        UPDATE
+        user
+        SET
+        <if test="userName!=null">
+            userName=#{userName},
+        </if>
+        <if test="img!=null">
+            img=#{img},
+        </if>
+        <if test="sex!=null">
+            sex=#{sex},
+        </if>
+        <if test="province!=null">
+            province=#{province},
+        </if>
+        <if test="city!=null">
+            city=#{city},
+        </if>
+        <if test="area!=null">
+            area=#{area},
+        </if>
+        <if test="address!=null">
+            address=#{address},
+        </if>
+        <if test="description!=null">
+            description=#{description},
+        </if>
+        <if test="tel!=null">
+            tel=#{tel},
+        </if>
+          userId=#{userId}
+
+        WHERE
+        userId=#{userId}
+
+    </update>
+
+
+    <!--<delete id="delete" parameterType="int">-->
+    <!--DELETE-->
+    <!--FROM channel-->
+    <!--WHERE channelId = #{channelId}-->
+    <!--</delete>-->
 
 </mapper>
