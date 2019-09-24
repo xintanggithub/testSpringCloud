@@ -48,4 +48,11 @@ public class UserController {
         return userService.updateUser(updateUserRequest);
     }
 
+    @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
+    @ApiOperation(value = "根据用户ID删除用户信息", notes = "v1.0.0")
+    public BaseResponse deleteUser(@ApiParam(required = true, name = "userId", value = "用户ID")
+                                   @RequestParam(value = "userId", required = true) String userId) {
+        return userService.deleteUser(userId);
+    }
+
 }

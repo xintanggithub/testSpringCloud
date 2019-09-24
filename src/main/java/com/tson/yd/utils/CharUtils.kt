@@ -16,6 +16,8 @@ class CharUtils {
 
     companion object {
 
+        const val MIN_1 = 1000;
+
         private val LOGGER = LoggerFactory.getLogger(CharUtils::class.java)
 
         fun getUserUUID(): String {

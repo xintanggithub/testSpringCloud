@@ -20,8 +20,16 @@
         tel,
         userType,
         userStatus,
-        UNIX_TIMESTAMP(createTime) createTime,
-        UNIX_TIMESTAMP(updateTime) updateTime
+        UNIX_TIMESTAMP
+        (
+        createTime
+        )
+        createTime,
+        UNIX_TIMESTAMP
+        (
+        updateTime
+        )
+        updateTime
     </sql>
 
     <select id="queryUsers" resultType="com.tson.yd.model.UserEntity">
@@ -79,10 +87,21 @@
         <if test="tel!=null">
             tel=#{tel},
         </if>
-          userId=#{userId}
+        userId=#{userId}
 
         WHERE
         userId=#{userId}
+
+    </update>
+
+    <update id="deleteUser" parameterType="java.lang.String">
+        UPDATE
+            user
+        SET
+            userStatus=0
+
+        WHERE
+            userId = #{userId}
 
     </update>
 

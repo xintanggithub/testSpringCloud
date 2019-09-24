@@ -35,4 +35,11 @@ public interface UserDao {
      */
     void updateUser(UserEntity userEntity);
 
+    /**
+     * 删除用户
+     *
+     * @param userId 用户ID
+     */
+    void deleteUser(String userId);
+
 }

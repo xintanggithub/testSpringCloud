@@ -41,4 +41,12 @@ public interface UserService {
      */
     BaseResponse updateUser(UpdateUserRequest userEntity);
 
+    /**
+     * 删除用户
+     *
+     * @param userId 用户ID
+     * @return 返回删除结果
+     */
+    BaseResponse deleteUser(String userId);
+
 }

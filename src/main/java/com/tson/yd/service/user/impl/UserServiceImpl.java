@@ -19,6 +19,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 
+import static com.tson.yd.utils.CharUtils.MIN_1;
+
 @Service(value = "UserService")
 public class UserServiceImpl implements UserService {
 
@@ -79,8 +81,8 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = JSON.parseObject(JSON.toJSONString(userRequest), UserEntity.class);
         userEntity.setUserId(userUserId);
         userEntity.setUserStatus(1);
-        userEntity.setCreateTime(System.currentTimeMillis() / 1000);
-        userEntity.setUpdateTime(System.currentTimeMillis() / 1000);
+        userEntity.setCreateTime(System.currentTimeMillis() / MIN_1);
+        userEntity.setUpdateTime(System.currentTimeMillis() / MIN_1);
         userDao.insertUser(userEntity);
         BaseResponse<String> response = new BaseResponse<>();
         response.setData(userUserId);
@@ -92,14 +94,36 @@ public class UserServiceImpl implements UserService {
     public BaseResponse updateUser(UpdateUserRequest userEntity) {
         BaseResponse response = new BaseResponse();
         if (null != userEntity && !StringUtils.isEmpty(userEntity.getUserId())) {
-            String jsonStr = JSON.toJSONString(userEntity);
-            LOGGER.debug(jsonStr);
-            UserEntity updateUserEntity = JSON.parseObject(jsonStr, UserEntity.class);
-            updateUserEntity.setUpdateTime(System.currentTimeMillis() / 1000);
-            userDao.updateUser(updateUserEntity);
-            response.setStatus(LogCode.RC_SUCCESS);
+            UserEntity queryCheck = userDao.queryUserById(userEntity.getUserId());
+            if (null != queryCheck) {
+                String jsonStr = JSON.toJSONString(userEntity);
+                LOGGER.debug(jsonStr);
+                UserEntity updateUserEntity = JSON.parseObject(jsonStr, UserEntity.class);
+                updateUserEntity.setUpdateTime(System.currentTimeMillis() / MIN_1);
+                userDao.updateUser(updateUserEntity);
+                response.setStatus(LogCode.RC_SUCCESS);
+            } else {
+                response.setStatus(LogCode.RC_USER_NONE);
+            }
         } else {
             response.setStatus(LogCode.RC_PARAMETER_ERROR);
+        }
+        return response;
+    }
+
+    @Override
+    public BaseResponse deleteUser(String userId) {
+        BaseResponse response = new BaseResponse();
+        if (StringUtils.isEmpty(userId)) {
+            response.setStatus(LogCode.RC_PARAMETER_ERROR);
+        } else {
+            UserEntity queryEntity = userDao.queryUserById(userId);
+            if (null != queryEntity) {
+                userDao.deleteUser(userId);
+                response.setStatus(LogCode.RC_SUCCESS);
+            } else {
+                response.setStatus(LogCode.RC_USER_NONE);
+            }
         }
         return response;
     }
