@@ -5,7 +5,7 @@
 
     <groupId>com.tson.yd</groupId>
     <artifactId>tson</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <name>tson</name>
     <description>service</description>
     <packaging>jar</packaging>
@@ -119,10 +119,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
@@ -145,6 +141,10 @@
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

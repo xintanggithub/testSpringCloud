@@ -32,7 +32,7 @@ public class Swagger2 {
                 .description("base url : https://www.tsondy.club/")
                 .termsOfServiceUrl("https://www.baidu.com/")
                 .contact("Tson")
-                .version("0.0.1")
+                .version("0.0.4")
                 .build();
     }
 }

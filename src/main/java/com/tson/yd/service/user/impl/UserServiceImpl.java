@@ -11,6 +11,7 @@ import com.tson.yd.model.UserEntity;
 import com.tson.yd.model.request.InsertUserRequest;
 import com.tson.yd.model.request.UpdateUserRequest;
 import com.tson.yd.service.user.UserService;
+import com.tson.yd.utils.CharUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.UUID;
-
-import static com.tson.yd.utils.CharUtils.MIN_1;
 
 @Service(value = "UserService")
 public class UserServiceImpl implements UserService {
@@ -81,8 +80,8 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = JSON.parseObject(JSON.toJSONString(userRequest), UserEntity.class);
         userEntity.setUserId(userUserId);
         userEntity.setUserStatus(1);
-        userEntity.setCreateTime(System.currentTimeMillis() / MIN_1);
-        userEntity.setUpdateTime(System.currentTimeMillis() / MIN_1);
+        userEntity.setCreateTime(System.currentTimeMillis() / CharUtils.MIN_1);
+        userEntity.setUpdateTime(System.currentTimeMillis() / CharUtils.MIN_1);
         userDao.insertUser(userEntity);
         BaseResponse<String> response = new BaseResponse<>();
         response.setData(userUserId);
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
                 String jsonStr = JSON.toJSONString(userEntity);
                 LOGGER.debug(jsonStr);
                 UserEntity updateUserEntity = JSON.parseObject(jsonStr, UserEntity.class);
-                updateUserEntity.setUpdateTime(System.currentTimeMillis() / MIN_1);
+                updateUserEntity.setUpdateTime(System.currentTimeMillis() / CharUtils.MIN_1);
                 userDao.updateUser(updateUserEntity);
                 response.setStatus(LogCode.RC_SUCCESS);
             } else {
