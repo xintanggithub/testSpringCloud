@@ -1,4 +1,13 @@
 server:
+  port: 443
+  ssl:
+    enabled: true
+    key-store-password: 970827351Yd
+    key-store: classpath:www.tsondy.club.jks
+    key-store-type: JKS
+condition:
+  http2https: true
+http:
   port: 8080
 
 spring:
