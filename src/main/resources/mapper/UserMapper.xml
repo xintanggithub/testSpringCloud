@@ -51,7 +51,7 @@
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.tson.yd.model.UserEntity">
         INSERT INTO
-            `user`(userName, userId, img, sex, province, city, area, address, description, tel, createTime, updateTime)
+            `user`(userName, userId, img, sex, province, city, area, address, description, tel)
         VALUES
         (#{userName}, #{userId}, #{img}, #{sex}, #{province}, #{city}, #{area}, #{address}, #{description}, #{tel})
     </insert>

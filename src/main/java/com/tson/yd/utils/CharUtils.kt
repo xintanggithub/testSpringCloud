@@ -26,6 +26,14 @@ class CharUtils {
             return uuid
         }
 
+        fun getPassword(password: String): String {
+            var mdStr1 = md5Lower(password)
+            LOGGER.warn("mdStr1 = $mdStr1")
+            mdStr1 = md5Upper(mdStr1)
+            LOGGER.warn("mdStr2 = $mdStr1")
+            return mdStr1
+        }
+
         fun getRandomString(length: Int): String { //length表示生成字符串的长度
             val base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTWVUXYZ0123456789"
             val random = Random()
