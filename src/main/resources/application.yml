@@ -1,14 +1,18 @@
 server:
-  port: 443
-  ssl:
-    enabled: true
-    key-store-password: 970827351Yd
-    key-store: classpath:www.tsondy.club.jks
-    key-store-type: JKS
-condition:
-  http2https: true
-http:
   port: 8080
+  servlet:
+    context-path: /api
+#  ssl:
+#    enabled: true
+#    key-store-password: 970827351Yd
+#    key-store: classpath:www.tsondy.club.jks
+#    key-store-type: JKS
+#    ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_RC4_128_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,SSL_RSA_WITH_RC4_128_SHA
+#
+#condition:
+#  http2https: true
+#http:
+#  port: 8080
 
 spring:
     datasource:

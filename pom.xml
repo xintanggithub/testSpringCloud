@@ -5,7 +5,7 @@
 
     <groupId>com.tson.yd</groupId>
     <artifactId>tson</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.7</version>
     <name>tson</name>
     <description>service</description>
     <packaging>jar</packaging>
