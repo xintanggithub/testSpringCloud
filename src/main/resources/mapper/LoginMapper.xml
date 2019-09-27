@@ -3,5 +3,22 @@
 <mapper namespace="com.tson.yd.dao.LoginDao">
 
 
+    <select id="queryLogin" resultType="com.tson.yd.model.login.LoginEntity">
+        SELECT
+            id,
+            userCode,
+            userId,
+            `password`,
+            createTime,
+            updateTime,
+            unRegister
+        FROM
+            login
+        WHERE
+            userCode = #{userCode}
+    </select>
+
+
+
 
 </mapper>
