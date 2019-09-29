@@ -45,8 +45,8 @@ class LoginController {
 
     @RequestMapping(value = ["/sendEmail"], method = [RequestMethod.POST])
     @ApiOperation(value = "发送邮件", notes = "v1.0.0")
-    fun sendEmail(@RequestBody request: EmailRequest) {
-        emailService.sendHtmlMail(request.to, request.subject, request.content)
+    fun sendEmail(@RequestBody request: EmailRequest) :BaseResponse<String> {
+        return emailService.sendHtmlMail(request.to, request.subject, request.content)
     }
 
 }
