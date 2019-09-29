@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.MainDao">
+
+    <select id="queryMainConfig" resultType="com.tson.yd.model.main.MainConfigEntity">
+        SELECT
+            content1,
+            content2,
+            content3,
+            content4,
+            content5,
+            content6,
+            content7,
+            content8
+        FROM
+            main
+    </select>
+
+</mapper>
