@@ -53,6 +53,18 @@ class LoginController {
         return emailService.register(request)
     }
 
+    @RequestMapping(value = ["/updateLogin"], method = [RequestMethod.POST])
+    @ApiOperation(value = "修改密码", notes = "v1.0.0")
+    fun updateLogin(@RequestBody loginEntity: LoginEntity): BaseResponse<Any> {
+        return emailService.updateLogin(loginEntity)
+    }
+
+    @RequestMapping(value = ["/updateRegister"], method = [RequestMethod.POST])
+    @ApiOperation(value = "账号冻结", notes = "v1.0.0")
+    fun updateRegister(@RequestBody loginEntity: LoginEntity): BaseResponse<Any> {
+        return emailService.updateRegister(loginEntity)
+    }
+
 //    @RequestMapping(value = ["/sendEmail"], method = [RequestMethod.POST])
 //    @ApiOperation(value = "发送邮件", notes = "v1.0.0")
 //    fun sendEmail(@RequestBody request: EmailRequest): BaseResponse<String> {

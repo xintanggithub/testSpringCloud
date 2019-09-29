@@ -52,5 +52,7 @@ interface EmailService {
 
     fun queryLogin(userCode: String): BaseResponse<LoginEntity>
     fun login(loginEntity: LoginEntity): BaseResponse<LoginUserIdEntity>
+    fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any>
+    fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any>
 
 }

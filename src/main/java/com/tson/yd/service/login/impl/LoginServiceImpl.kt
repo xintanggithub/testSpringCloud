@@ -13,6 +13,7 @@ import com.tson.yd.utils.CharUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.thymeleaf.util.StringUtils
 
 @Service(value = "LoginService")
 class LoginServiceImpl : LoginService {
@@ -23,7 +24,7 @@ class LoginServiceImpl : LoginService {
     }
 
     @Autowired
-    private lateinit var userDao: LoginDao
+    private lateinit var loginDao: LoginDao
     @Autowired
     private lateinit var userService: UserService
 
@@ -33,7 +34,7 @@ class LoginServiceImpl : LoginService {
             when (userCode.isEmpty()) {
                 true -> root.setStatus(LogCode.RC_PARAMETER_ERROR)
                 false -> {
-                    userDao.queryLogin(userCode).also { cd ->
+                    loginDao.queryLogin(userCode).also { cd ->
                         when (null == cd) {
                             true -> root.setStatus(LogCode.RC_USER_NONE)
                             else -> root.run {
@@ -83,7 +84,7 @@ class LoginServiceImpl : LoginService {
         loginEntity.password = CharUtils.getPassword(loginEntity.password)
         LOGGER.debug("insertLogin ---> insertLogin  userCode = ${loginEntity.userCode}  password = ${loginEntity.password}")
         //插入user信息成功，开始插入login信息
-        userDao.insertLogin(loginEntity)
+        loginDao.insertLogin(loginEntity)
         LOGGER.debug("insertLogin ---> insertLogin end")
         response.data = LoginUserIdEntity().also {
             it.userId = insertUser.data
@@ -117,6 +118,32 @@ class LoginServiceImpl : LoginService {
                 resultMessage = queryLogin.resultMessage
             }
         }
+        return response
+    }
+
+    override fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any> {
+        val response = BaseResponse<Any>()
+        if (StringUtils.isEmpty(loginEntity.userCode) || StringUtils.isEmpty(loginEntity.password)
+                || StringUtils.isEmpty(loginEntity.userId)) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        loginEntity.password = CharUtils.getPassword(loginEntity.password)
+        loginDao.updateLogin(loginEntity)
+        response.setStatus(LogCode.RC_SUCCESS)
+        return response
+    }
+
+    override fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any> {
+        val response = BaseResponse<Any>()
+        if (StringUtils.isEmpty(loginEntity.userCode) || StringUtils.isEmpty(loginEntity.userId)) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        loginDao.updateLogin(loginEntity)
+        response.setStatus(LogCode.RC_SUCCESS)
         return response
     }
 

@@ -35,5 +35,20 @@
         )
     </insert>
 
+    <update id="updateLogin" parameterType="com.tson.yd.model.login.LoginEntity">
+        UPDATE
+        login
+        SET
+        <if test="password!=null">
+            `password`=#{password},
+        </if>
+        <if test="unRegister!=null">
+            unRegister=#{unRegister},
+        </if>
+        userCode=#{userCode}
+        WHERE
+        userId=#{userId}
+    </update>
+
 
 </mapper>

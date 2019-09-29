@@ -173,4 +173,12 @@ class EmailServiceImpl : EmailService {
         return loginService.login(loginEntity)
     }
 
+    override fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any> {
+        return loginService.updateLogin(loginEntity)
+    }
+
+    override fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any> {
+        return loginService.updateRegister(loginEntity)
+    }
+
 }

@@ -29,4 +29,11 @@ interface LoginService {
      */
     fun login(loginEntity: LoginEntity): BaseResponse<LoginUserIdEntity>
 
+    /**
+     * 更新登录的账号数据
+     */
+    fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any>
+
+    fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any>
+
 }
