@@ -34,9 +34,15 @@ class CharUtils {
             return mdStr1
         }
 
+        fun verificationCode(): String {
+            return getRandomString(6, "0123456789")
+        }
 
-        fun getRandomString(length: Int): String { //length表示生成字符串的长度
-            val base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTWVUXYZ0123456789"
+        fun getRandomString(length: Int): String {
+            return getRandomString(length, "abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTWVUXYZ0123456789")
+        }
+
+        fun getRandomString(length: Int, base: String): String { //length表示生成字符串的长度
             val random = Random()
             val sb = StringBuilder()
             for (i in 0 until length) {
@@ -125,6 +131,7 @@ class CharUtils {
             val result4 = BigDecimal(teraBytes)
             return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB"
         }
+
     }
 
 }

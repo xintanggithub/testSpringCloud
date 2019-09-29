@@ -8,6 +8,9 @@ public enum LogCode {
     RC_USER_NOT_NONE(7778, "User already exists ~"),
     RC_USER_PASSWORD_ERROR(7779, "Password error ~"),
     RC_SEND_EMAIL_ERROR(3304, "send email error~"),
+    RC_QUERY_EMAIL_ERROR(3305, "email code is empty"),
+    RC_VERIFICATION_CODE_SEND_ERROR(3306, "VerificationCode send error"),
+    RC_VERIFICATION_CODE_ERROR(3307, "VerificationCode error"),
     RC_SUCCESS(200, "success");
 
     private int code;

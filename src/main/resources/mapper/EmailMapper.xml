@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.EmailDao">
+
+    <insert id="insertData" parameterType="com.tson.yd.model.email.InsertEmailRequest">
+        INSERT
+        register
+        (
+        userCode,
+        verificationCode
+        )
+        VALUES
+        (
+        #{userCode},
+        #{verificationCode}
+        )
+    </insert>
+
+    <select id="queryEmailData" resultType="com.tson.yd.model.email.EmailEntity">
+        SELECT
+            userCode,
+            verificationCode,
+            UNIX_TIMESTAMP
+                (
+                    createTime
+                )
+                createTime
+                ,
+            UNIX_TIMESTAMP
+                (
+                    updateTime
+                )
+                updateTime
+        FROM
+            register
+        WHERE
+            userCode = #{userCode}
+    </select>
+
+
+    <update id="updateEmailData" parameterType="com.tson.yd.model.email.InsertEmailRequest">
+        UPDATE
+            register
+        SET
+            verificationCode=#{verificationCode}
+        WHERE
+            userCode = #{userCode}
+    </update>
+
+</mapper>
+
