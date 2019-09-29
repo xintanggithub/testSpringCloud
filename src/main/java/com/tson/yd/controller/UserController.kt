@@ -21,7 +21,7 @@ class UserController {
     private lateinit var userService: UserService
 
     @RequestMapping(value = ["/queryUsers"], method = [RequestMethod.GET])
-    @ApiOperation(value = "分页查询用户信息", notes = "v1.0.0")
+//    @ApiOperation(value = "分页查询用户信息", notes = "v1.0.0")
     fun queryUsers(@ApiParam(required = true, name = "page", value = "页数")
                    @RequestParam(value = "page", required = true)
                    page: Int,
@@ -40,7 +40,7 @@ class UserController {
     }
 
     @RequestMapping(value = ["/insertUser"], method = [RequestMethod.POST])
-    @ApiOperation(value = "新增用户", notes = "v1.0.0")
+//    @ApiOperation(value = "新增用户", notes = "v1.0.0")
     fun insertUser(@RequestBody userRequest: InsertUserRequest): BaseResponse<String> {
         return userService.insertUser(userRequest)
     }
@@ -52,7 +52,7 @@ class UserController {
     }
 
     @RequestMapping(value = ["/deleteUser"], method = [RequestMethod.GET])
-    @ApiOperation(value = "根据用户ID删除用户信息", notes = "v1.0.0")
+//    @ApiOperation(value = "根据用户ID删除用户信息", notes = "v1.0.0")
     fun deleteUser(@ApiParam(required = true, name = "userId", value = "用户ID")
                    @RequestParam(value = "userId", required = true)
                    userId: String): BaseResponse<*> {
