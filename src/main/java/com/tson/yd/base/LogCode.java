@@ -7,6 +7,7 @@ public enum LogCode {
     RC_USER_NONE(7777, "User does not exist!"),
     RC_USER_NOT_NONE(7778, "User already exists ~"),
     RC_USER_PASSWORD_ERROR(7779, "Password error ~"),
+    RC_SEND_EMAIL_ERROR(3304, "send email error~"),
     RC_SUCCESS(200, "success");
 
     private int code;

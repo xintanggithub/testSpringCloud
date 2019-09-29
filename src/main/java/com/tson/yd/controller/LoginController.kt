@@ -1,8 +1,10 @@
 package com.tson.yd.controller
 
 import com.tson.yd.base.BaseResponse
+import com.tson.yd.model.email.EmailRequest
 import com.tson.yd.model.login.LoginEntity
 import com.tson.yd.model.login.LoginUserIdEntity
+import com.tson.yd.service.email.EmailService
 import com.tson.yd.service.login.LoginService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -17,6 +19,9 @@ class LoginController {
 
     @Autowired
     private lateinit var loginService: LoginService
+
+    @Autowired
+    private lateinit var emailService: EmailService
 
     @RequestMapping(value = ["/queryLoginByUserCode"], method = [RequestMethod.GET])
     @ApiOperation(value = "根据账号查询账号信息", notes = "v1.0.0")
@@ -36,6 +41,12 @@ class LoginController {
     @ApiOperation(value = "账号登录", notes = "v1.0.0")
     fun login(@RequestBody loginEntity: LoginEntity): BaseResponse<LoginUserIdEntity> {
         return loginService.login(loginEntity)
+    }
+
+    @RequestMapping(value = ["/sendEmail"], method = [RequestMethod.POST])
+    @ApiOperation(value = "发送邮件", notes = "v1.0.0")
+    fun sendEmail(@RequestBody request: EmailRequest) {
+        emailService.sendHtmlMail(request.to, request.subject, request.content)
     }
 
 }
