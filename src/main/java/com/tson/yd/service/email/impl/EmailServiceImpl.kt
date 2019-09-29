@@ -165,6 +165,28 @@ class EmailServiceImpl : EmailService {
         }
     }
 
+    override fun checkEmailCode(userCode: String, verificationCode: String): BaseResponse<Any> {
+        val response = BaseResponse<Any>()
+        if (StringUtils.isEmpty(userCode) || StringUtils.isEmpty(verificationCode)) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        val queryResult = queryEmailData(userCode)
+        return if (queryResult.resultCode == LogCode.RC_SUCCESS.code) {
+            if (queryResult.data.verificationCode == verificationCode) {
+                return response.also { it.setStatus(LogCode.RC_SUCCESS) }
+            } else {
+                return response.also { it.setStatus(LogCode.RC_VERIFICATION_CODE_ERROR) }
+            }
+        } else {
+            response.also {
+                it.resultCode = queryResult.resultCode
+                it.resultMessage = queryResult.resultMessage
+            }
+        }
+    }
+
     override fun queryLogin(userCode: String): BaseResponse<LoginEntity> {
         return loginService.queryLogin(userCode)
     }

@@ -71,4 +71,14 @@ class LoginController {
 //        return emailService.sendContentMail(request.to, request.subject, "验证码：${request.content}")
 //    }
 
+    @RequestMapping(value = ["/checkVerificationCode"], method = [RequestMethod.GET])
+    @ApiOperation(value = "校验验证码", notes = "v1.0.0")
+    fun checkVerificationCode(@ApiParam(required = true, name = "userCode", value = "账号")
+                              @RequestParam(value = "userCode", required = true)
+                              userCode: String, @ApiParam(required = true, name = "verificationCode", value = "验证码")
+                              @RequestParam(value = "verificationCode", required = true)
+                              verificationCode: String): BaseResponse<Any> {
+        return emailService.checkEmailCode(userCode, verificationCode)
+    }
+
 }

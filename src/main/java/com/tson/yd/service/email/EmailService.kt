@@ -55,4 +55,6 @@ interface EmailService {
     fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any>
     fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any>
 
+    fun checkEmailCode(userCode: String, verificationCode: String): BaseResponse<Any>
+
 }
