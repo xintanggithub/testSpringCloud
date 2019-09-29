@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tson.yd.dao.LoginDao">
 
-
     <select id="queryLogin" resultType="com.tson.yd.model.login.LoginEntity">
         SELECT
             id,
@@ -18,7 +17,23 @@
             userCode = #{userCode}
     </select>
 
-
+    <insert id="insertLogin" parameterType="com.tson.yd.model.login.LoginEntity">
+        INSERT
+        login
+        (
+        userCode,
+        userId,
+        `password`,
+        unRegister
+        )
+        VALUES
+        (
+        #{userCode},
+        #{userId},
+        #{password},
+        '1'
+        )
+    </insert>
 
 
 </mapper>

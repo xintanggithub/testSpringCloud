@@ -13,6 +13,12 @@ public interface LoginDao {
     LoginEntity queryLogin(String userCode);
 
     /**
+     * 新增
+     * @param loginEntity 账号数据
+     */
+    void insertLogin(LoginEntity loginEntity);
+
+    /**
      * 更新密码
      *
      * @param password 密码
@@ -32,11 +38,5 @@ public interface LoginDao {
      * @param register 注册状态 1正常 0注销
      */
     void updateLogin(String password, String register);
-
-    /**
-     * 新增
-     * @param loginEntity 账号数据
-     */
-    void insertLogin(LoginEntity loginEntity);
 
 }

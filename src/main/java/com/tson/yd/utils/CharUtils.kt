@@ -34,6 +34,7 @@ class CharUtils {
             return mdStr1
         }
 
+
         fun getRandomString(length: Int): String { //length表示生成字符串的长度
             val base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTWVUXYZ0123456789"
             val random = Random()
@@ -46,11 +47,11 @@ class CharUtils {
         }
 
         fun md5Upper(string: String): String {
-            return md5(string, true);
+            return md5(string, true)
         }
 
         fun md5Lower(string: String): String {
-            return md5(string, false);
+            return md5(string, false)
         }
 
         fun md5(string: String, isUpper: Boolean): String {
