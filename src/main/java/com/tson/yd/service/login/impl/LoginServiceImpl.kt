@@ -57,6 +57,13 @@ class LoginServiceImpl : LoginService {
                 it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
         }
+
+        if (!CharUtils.isEmail(loginEntity.userCode)) {
+            return response.also {
+                it.setStatus(LogCode.RC_USER_EMAIL_FORMAT_ERROR)
+            }
+        }
+
         //先判断是否有相关账号
         val queryLogin = queryLogin(loginEntity.userCode)
         //如果有查询到，返回：用户已存在
@@ -101,6 +108,13 @@ class LoginServiceImpl : LoginService {
                 it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
         }
+
+        if (!CharUtils.isEmail(loginEntity.userCode)) {
+            return response.also {
+                it.setStatus(LogCode.RC_USER_EMAIL_FORMAT_ERROR)
+            }
+        }
+
         //查询用户信息，确认用户是否存在
         val queryLogin = queryLogin(loginEntity.userCode)
         if (queryLogin.resultCode == LogCode.RC_SUCCESS.code) {

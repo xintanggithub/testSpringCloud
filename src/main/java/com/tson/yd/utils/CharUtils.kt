@@ -6,6 +6,8 @@ import java.math.BigDecimal
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import kotlin.experimental.and
 
 /**
@@ -130,6 +132,13 @@ class CharUtils {
             }
             val result4 = BigDecimal(teraBytes)
             return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB"
+        }
+
+        fun isEmail(string: String): Boolean {
+            val regEx1: String = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+            val p = Pattern.compile(regEx1)
+            val m = p.matcher(string)
+            return m.matches()
         }
 
     }
