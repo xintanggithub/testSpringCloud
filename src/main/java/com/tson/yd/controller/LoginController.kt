@@ -81,4 +81,12 @@ class LoginController {
         return emailService.checkEmailCode(userCode, verificationCode)
     }
 
+    @RequestMapping(value = ["/checkRegister"], method = [RequestMethod.GET])
+    @ApiOperation(value = "校验是否已注册", notes = "v1.0.0")
+    fun checkRegister(@ApiParam(required = true, name = "userCode", value = "账号")
+                      @RequestParam(value = "userCode", required = true)
+                      userCode: String): BaseResponse<Boolean> {
+        return emailService.checkRegister(userCode)
+    }
+
 }

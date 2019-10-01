@@ -203,4 +203,11 @@ class EmailServiceImpl : EmailService {
         return loginService.updateRegister(loginEntity)
     }
 
+    override fun checkRegister(userCode: String): BaseResponse<Boolean> {
+        if (StringUtils.isEmpty(userCode)) return BaseResponse<Boolean>().also {
+            it.setStatus(LogCode.RC_PARAMETER_ERROR)
+        }
+        return loginService.checkRegister(userCode);
+    }
+
 }

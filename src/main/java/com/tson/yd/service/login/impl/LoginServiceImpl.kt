@@ -161,4 +161,12 @@ class LoginServiceImpl : LoginService {
         return response
     }
 
+    override fun checkRegister(userCode: String): BaseResponse<Boolean> {
+        val queryResponse = queryLogin(userCode)
+        return BaseResponse<Boolean>().also {
+            it.data = (queryResponse.resultCode == LogCode.RC_SUCCESS.code)
+            it.setStatus(LogCode.RC_SUCCESS)
+        }
+    }
+
 }

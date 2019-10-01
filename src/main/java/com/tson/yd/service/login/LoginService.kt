@@ -36,4 +36,6 @@ interface LoginService {
 
     fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any>
 
+    fun checkRegister(userCode: String): BaseResponse<Boolean>
+
 }

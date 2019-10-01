@@ -6,7 +6,9 @@ import com.tson.yd.model.email.InsertEmailRequest
 import com.tson.yd.model.login.LoginEntity
 import com.tson.yd.model.login.LoginUserIdEntity
 import com.tson.yd.model.login.RegisterEntity
+import io.swagger.annotations.ApiParam
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 
 interface EmailService {
 
@@ -56,5 +58,5 @@ interface EmailService {
     fun updateRegister(loginEntity: LoginEntity): BaseResponse<Any>
 
     fun checkEmailCode(userCode: String, verificationCode: String): BaseResponse<Any>
-
+    fun checkRegister(userCode: String): BaseResponse<Boolean>
 }
