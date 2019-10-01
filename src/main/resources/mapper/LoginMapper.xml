@@ -47,7 +47,7 @@
         </if>
         userCode=#{userCode}
         WHERE
-        userId=#{userId}
+        userCode=#{userCode}
     </update>
 
 

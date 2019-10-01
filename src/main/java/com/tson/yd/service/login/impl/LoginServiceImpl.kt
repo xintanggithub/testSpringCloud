@@ -137,13 +137,29 @@ class LoginServiceImpl : LoginService {
 
     override fun updateLogin(loginEntity: LoginEntity): BaseResponse<Any> {
         val response = BaseResponse<Any>()
-        if (StringUtils.isEmpty(loginEntity.userCode) || StringUtils.isEmpty(loginEntity.password)
-                || StringUtils.isEmpty(loginEntity.userId)) {
+        if (StringUtils.isEmpty(loginEntity.userCode) || StringUtils.isEmpty(loginEntity.password)) {
             return response.also {
                 it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
         }
+
+        val requestQuery = queryLogin(loginEntity.userCode)
+        if (requestQuery.resultCode != LogCode.RC_SUCCESS.code) {
+            return response.also {
+                it.setStatus(LogCode.RC_USER_NONE)
+            }
+        }
+
+        LOGGER.debug("old password => ${loginEntity.password}")
         loginEntity.password = CharUtils.getPassword(loginEntity.password)
+        LOGGER.debug("new password => ${loginEntity.password}")
+
+        if (requestQuery.data.password==loginEntity.password){
+            return response.also {
+                it.setStatus(LogCode.RC_USER_PASSWORD_EQUALLY)
+            }
+        }
+
         loginDao.updateLogin(loginEntity)
         response.setStatus(LogCode.RC_SUCCESS)
         return response
