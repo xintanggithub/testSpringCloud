@@ -18,6 +18,17 @@ public class UpdateBookEntity {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "是否公开")
+    private Boolean openType;
+
+    public Boolean getOpenType() {
+        return openType;
+    }
+
+    public void setOpenType(Boolean openType) {
+        this.openType = openType;
+    }
+
     public String getTitle() {
         return title;
     }
