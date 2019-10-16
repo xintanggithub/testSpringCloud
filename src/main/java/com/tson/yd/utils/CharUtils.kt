@@ -1,7 +1,9 @@
 package com.tson.yd.utils;
 
+import org.apache.tomcat.util.security.MD5Encoder
 import org.slf4j.LoggerFactory
 import org.springframework.util.StringUtils
+import sun.security.provider.MD5
 import java.math.BigDecimal
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -34,6 +36,10 @@ class CharUtils {
             mdStr1 = md5Upper(mdStr1)
             LOGGER.warn("mdStr2 = $mdStr1")
             return mdStr1
+        }
+
+        fun getBookId():String{
+            return "book${UUID.randomUUID()}"
         }
 
         fun verificationCode(): String {
