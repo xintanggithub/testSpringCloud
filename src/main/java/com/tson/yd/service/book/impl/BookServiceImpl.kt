@@ -23,7 +23,7 @@ class BookServiceImpl : BookService {
         val response = BaseResponse<String>()
         if (request.userId.isEmpty()) {
             return response.also {
-                it.setStatus(LogCode.RC_USER_NONE)
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
         }
         val queryUser = userServiceImpl.queryUserById(request.userId)
@@ -35,6 +35,28 @@ class BookServiceImpl : BookService {
         }
         request.bookId = CharUtils.getBookId()
         bookDao.insertBook(request)
+        response.run {
+            setStatus(LogCode.RC_SUCCESS)
+        }
+        return response
+    }
+
+    override fun deleteBook(userId: String, bookId: String): BaseResponse<String> {
+        val response = BaseResponse<String>()
+        if (userId.isEmpty() || bookId.isEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        val queryUser = userServiceImpl.queryUserById(userId)
+        if (queryUser.resultCode != LogCode.RC_SUCCESS.code) {
+            return response.also {
+                it.resultCode = queryUser.resultCode
+                it.resultMessage = queryUser.resultMessage
+            }
+        }
+
+        bookDao.deleteBook(userId, bookId);
         response.run {
             setStatus(LogCode.RC_SUCCESS)
         }

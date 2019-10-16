@@ -11,4 +11,13 @@ interface BookService {
      */
     fun insertBook(request: InsertBootEntity): BaseResponse<String>
 
+    /**
+     * 删除book
+     *
+     * @param userId 用户ID
+     * @param bookId bookId
+     */
+    fun deleteBook(userId: String, bookId: String): BaseResponse<String>
+
+
 }

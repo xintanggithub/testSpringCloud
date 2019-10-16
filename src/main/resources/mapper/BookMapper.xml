@@ -24,4 +24,8 @@
         )
     </insert>
 
+    <delete id="deleteBook">
+        DELETE FROM book WHERE userId=#{userId} AND bookId=#{bookId}
+    </delete>
+
 </mapper>
