@@ -1,6 +1,8 @@
 package com.tson.yd.service.book
 
 import com.tson.yd.base.BaseResponse
+import com.tson.yd.base.ListBaseData
+import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 
 interface BookService {
@@ -19,5 +21,36 @@ interface BookService {
      */
     fun deleteBook(userId: String, bookId: String): BaseResponse<String>
 
+    /**
+     * 更新book
+     *
+     * @param request 更新内容
+     */
+    fun updateBook(request: InsertBootEntity): BaseResponse<String>
+
+    /**
+     * 查询book
+     *
+     * @param userId 用户ID
+     * @param bookId bookId
+     * @return book信息
+     */
+    fun queryBook(userId: String, bookId: String): BaseResponse<BookEntity>
+
+    /**
+     * 查询该用户的所有book
+     *
+     * @param userId 用户ID
+     * @return book列表
+     */
+    fun queryBooksByUser(userId: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
+
+    /**
+     * 查询所有公开的book
+     *
+     * @param isOpen 是否公开
+     * @return book列表
+     */
+    fun queryBookByOpenType(isOpen: Boolean, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
 
 }

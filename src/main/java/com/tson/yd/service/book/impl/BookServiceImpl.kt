@@ -1,8 +1,12 @@
 package com.tson.yd.service.book.impl
 
+import com.github.pagehelper.PageHelper
+import com.github.pagehelper.PageInfo
 import com.tson.yd.base.BaseResponse
+import com.tson.yd.base.ListBaseData
 import com.tson.yd.base.LogCode
 import com.tson.yd.dao.BookDao
+import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 import com.tson.yd.service.book.BookService
 import com.tson.yd.service.user.impl.UserServiceImpl
@@ -62,5 +66,106 @@ class BookServiceImpl : BookService {
         }
         return response
     }
+
+    override fun queryBook(userId: String, bookId: String): BaseResponse<BookEntity> {
+        val response = BaseResponse<BookEntity>()
+        if (userId.isEmpty() || bookId.isEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        val queryUser = userServiceImpl.queryUserById(userId)
+        if (queryUser.resultCode != LogCode.RC_SUCCESS.code) {
+            return response.also {
+                it.resultCode = queryUser.resultCode
+                it.resultMessage = queryUser.resultMessage
+            }
+        }
+        return response.also {
+            it.setStatus(LogCode.RC_SUCCESS)
+            it.data = bookDao.queryBook(userId, bookId)
+        }
+    }
+
+    override fun updateBook(request: InsertBootEntity): BaseResponse<String> {
+        val response = BaseResponse<String>()
+        if (request.userId.isEmpty() || request.bookId.isEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        val queryBook = queryBook(request.userId, request.bookId)
+        if (queryBook.resultCode != LogCode.RC_SUCCESS.code) {
+            return response.also {
+                it.resultCode = queryBook.resultCode
+                it.resultMessage = queryBook.resultMessage
+            }
+        }
+        bookDao.updateBook(request)
+        response.run {
+            setStatus(LogCode.RC_SUCCESS)
+        }
+        return response
+    }
+
+    override fun queryBooksByUser(userId: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        val response = BaseResponse<ListBaseData<BookEntity>>()
+        if (userId.isEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        val queryUser = userServiceImpl.queryUserById(userId)
+        if (queryUser.resultCode != LogCode.RC_SUCCESS.code) {
+            return response.also {
+                it.resultCode = queryUser.resultCode
+                it.resultMessage = queryUser.resultMessage
+            }
+        }
+        PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
+        val pageInfo = PageInfo(bookDao.queryBooksByUser(userId))
+        if (pageInfo.list.isEmpty()) {
+            response.resultCode = LogCode.RC_RESULT_EMPTY.code
+            response.resultMessage = LogCode.RC_RESULT_EMPTY.message
+            return response
+        }
+        return response.also {
+            it.data = ListBaseData<BookEntity>().also { l ->
+                l.lists = pageInfo.list
+                l.page = pageInfo.pageNum
+                l.pageSize = pageInfo.pageSize
+                l.totalCount = pageInfo.total.toInt()
+            }
+            it.setStatus(LogCode.RC_SUCCESS)
+        }
+    }
+
+    override fun queryBookByOpenType(isOpen: Boolean, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        val response = BaseResponse<ListBaseData<BookEntity>>()
+        //默认隐私
+        val type = if (isOpen) {
+            1
+        } else {
+            0
+        }
+        PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
+        val pageInfo = PageInfo(bookDao.queryBookByOpenType(type))
+
+        if (pageInfo.list.isEmpty()) {
+            response.resultCode = LogCode.RC_RESULT_EMPTY.code
+            response.resultMessage = LogCode.RC_RESULT_EMPTY.message
+            return response
+        }
+        return response.also {
+            it.data = ListBaseData<BookEntity>().also { l ->
+                l.lists = pageInfo.list
+                l.page = pageInfo.pageNum
+                l.pageSize = pageInfo.pageSize
+                l.totalCount = pageInfo.total.toInt()
+            }
+            it.setStatus(LogCode.RC_SUCCESS)
+        }
+    }
+
 
 }

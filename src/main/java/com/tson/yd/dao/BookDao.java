@@ -28,7 +28,7 @@ public interface BookDao {
      *
      * @param request 更新内容
      */
-    void updateBook(UpdateBookEntity request);
+    void updateBook(InsertBootEntity request);
 
     /**
      * 查询book
@@ -45,7 +45,7 @@ public interface BookDao {
      * @param userId 用户ID
      * @return book列表
      */
-    List<BookEntity> queryBook(String userId);
+    List<BookEntity> queryBooksByUser(String userId);
 
     /**
      * 查询所有公开的book
@@ -53,5 +53,5 @@ public interface BookDao {
      * @param isOpen 是否公开
      * @return book列表
      */
-    List<BookEntity> queryBook(Boolean isOpen);
+    List<BookEntity> queryBookByOpenType(Integer isOpen);
 }
