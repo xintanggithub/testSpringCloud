@@ -25,7 +25,7 @@ class BookServiceImpl : BookService {
 
     override fun insertBook(request: InsertBootEntity): BaseResponse<String> {
         val response = BaseResponse<String>()
-        if (request.userId.isEmpty()) {
+        if (request.userId == null || request.userId.isEmpty()) {
             return response.also {
                 it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
