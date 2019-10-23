@@ -11,7 +11,16 @@
             content5,
             content6,
             content7,
-            content8
+            content8,
+            img1,
+            img1,
+            img2,
+            img3,
+            img4,
+            img5,
+            img6,
+            img7,
+            img8
         FROM
             main
     </select>
