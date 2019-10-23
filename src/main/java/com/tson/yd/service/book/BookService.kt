@@ -53,4 +53,28 @@ interface BookService {
      */
     fun queryBookByOpenType(isOpen: Boolean, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
 
+    /**
+     * 搜索所有的book
+     * @param keyword 关键字
+     * @param openType book 类型 0 保密 1 公开
+     * @return book 列表
+     */
+    fun search(keyword: String, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
+
+    /**
+     * 搜索所有的book
+     * @param keyword 关键字
+     * @param openType book 类型 0 保密 1 公开
+     * @return book 列表
+     */
+    fun searchPublic(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
+
+    /**
+     * 搜索所有的book
+     * @param keyword 关键字
+     * @param openType book 类型 0 保密 1 公开
+     * @return book 列表
+     */
+    fun searchPrivate(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
+
 }

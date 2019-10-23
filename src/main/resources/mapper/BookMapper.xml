@@ -72,4 +72,11 @@
         WHERE openType = #{isOpen}
     </select>
 
+    <select id="search" parameterType="com.tson.yd.model.book.request.SearchRequest" resultType="com.tson.yd.model.book.BookEntity">
+        SELECT *
+        FROM book
+        where concat(title, content) like '%${keyword}%'
+          AND openType = #{openType}
+    </select>
+
 </mapper>

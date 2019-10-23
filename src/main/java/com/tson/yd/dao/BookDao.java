@@ -2,7 +2,7 @@ package com.tson.yd.dao;
 
 import com.tson.yd.model.book.BookEntity;
 import com.tson.yd.model.book.InsertBootEntity;
-import com.tson.yd.model.book.UpdateBookEntity;
+import com.tson.yd.model.book.request.SearchRequest;
 
 import java.util.List;
 
@@ -54,4 +54,15 @@ public interface BookDao {
      * @return book列表
      */
     List<BookEntity> queryBookByOpenType(Integer isOpen);
+
+    /**
+     * 搜索所有的book
+     * <p>
+     * 关键字
+     * book 类型 0 保密 1 公开
+     *
+     * @return book 列表
+     */
+    List<BookEntity> search(SearchRequest request);
+
 }

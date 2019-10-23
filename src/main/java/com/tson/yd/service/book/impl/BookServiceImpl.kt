@@ -8,11 +8,13 @@ import com.tson.yd.base.LogCode
 import com.tson.yd.dao.BookDao
 import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
+import com.tson.yd.model.book.request.SearchRequest
 import com.tson.yd.service.book.BookService
 import com.tson.yd.service.user.impl.UserServiceImpl
 import com.tson.yd.utils.CharUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.logging.Logger
 
 @Service
 class BookServiceImpl : BookService {
@@ -167,5 +169,35 @@ class BookServiceImpl : BookService {
         }
     }
 
+    override fun searchPublic(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        return search(keyword, 1, page, pageSize)
+    }
+
+    override fun searchPrivate(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        return search(keyword, 0, page, pageSize)
+    }
+
+    override fun search(keyword: String, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        val response = BaseResponse<ListBaseData<BookEntity>>()
+        PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
+        val pageInfo = PageInfo(bookDao.search(SearchRequest().also {
+            it.keyword = keyword
+            it.openType = openType
+        }))
+        if (pageInfo.list.isEmpty()) {
+            response.resultCode = LogCode.RC_RESULT_EMPTY.code
+            response.resultMessage = LogCode.RC_RESULT_EMPTY.message
+            return response
+        }
+        return response.also {
+            it.data = ListBaseData<BookEntity>().also { l ->
+                l.lists = pageInfo.list
+                l.page = pageInfo.pageNum
+                l.pageSize = pageInfo.pageSize
+                l.totalCount = pageInfo.total.toInt()
+            }
+            it.setStatus(LogCode.RC_SUCCESS)
+        }
+    }
 
 }
