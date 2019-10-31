@@ -95,8 +95,8 @@ class BookController {
 
     @RequestMapping(value = ["/search"], method = [RequestMethod.GET])
     @ApiOperation(value = "根据关键字搜索book列表", notes = "v1.0.0")
-    fun search(@ApiParam(required = true, name = "keyword", value = "关键字")
-               @RequestParam(value = "keyword", required = true) keyword: String,
+    fun search(@ApiParam(required = false, name = "keyword", value = "关键字")
+               @RequestParam(value = "keyword", required = false) keyword: String?,
                @ApiParam(required = true, name = "openType", value = "0 保密 1公开")
                @RequestParam(value = "openType", required = true) openType: Int,
                @ApiParam(required = true, name = "page", value = "页码")

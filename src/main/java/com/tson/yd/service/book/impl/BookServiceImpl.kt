@@ -177,7 +177,7 @@ class BookServiceImpl : BookService {
         return search(keyword, 0, page, pageSize)
     }
 
-    override fun search(keyword: String, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+    override fun search(keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
         val response = BaseResponse<ListBaseData<BookEntity>>()
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
         val pageInfo = PageInfo(bookDao.search(SearchRequest().also {
