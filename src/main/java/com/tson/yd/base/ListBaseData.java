@@ -9,7 +9,6 @@ import java.util.List;
 @ApiModel(description = "列表实体基类")
 public class ListBaseData<T> {
     @ApiModelProperty(value = "总数")
-    @JsonIgnore
     private int totalCount;
     @ApiModelProperty(value = "页码")
     private int page;
