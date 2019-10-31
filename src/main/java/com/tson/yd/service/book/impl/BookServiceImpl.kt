@@ -10,13 +10,19 @@ import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 import com.tson.yd.model.book.request.SearchRequest
 import com.tson.yd.service.book.BookService
+import com.tson.yd.service.email.impl.EmailServiceImpl
 import com.tson.yd.service.user.impl.UserServiceImpl
 import com.tson.yd.utils.CharUtils
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class BookServiceImpl : BookService {
+
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(BookServiceImpl::class.java)
+    }
 
     @Autowired
     lateinit var bookDao: BookDao
@@ -177,18 +183,17 @@ class BookServiceImpl : BookService {
     }
 
     override fun search(userId: String?, keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        LOGGER.debug("userId=$userId  keyword=$keyword  openType=$openType")
         val response = BaseResponse<ListBaseData<BookEntity>>()
-        if (openType == 0 && userId.isNullOrEmpty()) {
-            return response.also {
-                it.setStatus(LogCode.RC_USER_NONE)
-            }
-        }
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
-        val pageInfo = PageInfo(bookDao.search(SearchRequest().also {
+        val dt=SearchRequest().also {
             it.keyword = keyword
             it.openType = openType
-            it.userId = userId
-        }))
+            if (!userId.isNullOrEmpty()){
+                it.userId = userId
+            }
+        }
+        val pageInfo = PageInfo(bookDao.search(dt))
         if (pageInfo.list.isEmpty()) {
             response.resultCode = LogCode.RC_RESULT_EMPTY.code
             response.resultMessage = LogCode.RC_RESULT_EMPTY.message
