@@ -14,7 +14,6 @@ import com.tson.yd.service.user.impl.UserServiceImpl
 import com.tson.yd.utils.CharUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.logging.Logger
 
 @Service
 class BookServiceImpl : BookService {
@@ -170,19 +169,25 @@ class BookServiceImpl : BookService {
     }
 
     override fun searchPublic(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        return search(keyword, 1, page, pageSize)
+        return search("", keyword, 1, page, pageSize)
     }
 
-    override fun searchPrivate(keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        return search(keyword, 0, page, pageSize)
+    override fun searchPrivate(userId: String?, keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+        return search(userId, keyword, 0, page, pageSize)
     }
 
-    override fun search(keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
+    override fun search(userId: String?, keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
         val response = BaseResponse<ListBaseData<BookEntity>>()
+        if (openType == 0 && userId.isNullOrEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_USER_NONE)
+            }
+        }
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
         val pageInfo = PageInfo(bookDao.search(SearchRequest().also {
             it.keyword = keyword
             it.openType = openType
+            it.userId = userId
         }))
         if (pageInfo.list.isEmpty()) {
             response.resultCode = LogCode.RC_RESULT_EMPTY.code

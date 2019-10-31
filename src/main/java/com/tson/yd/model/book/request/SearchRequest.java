@@ -6,6 +6,16 @@ public class SearchRequest {
 
     private Integer openType;
 
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getKeyword() {
         return keyword;
     }

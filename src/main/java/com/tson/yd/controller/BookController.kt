@@ -84,18 +84,22 @@ class BookController {
 
     @RequestMapping(value = ["/searchPrivate"], method = [RequestMethod.GET])
     @ApiOperation(value = "根据关键字搜索book列表 - 保密", notes = "v1.0.0")
-    fun searchPrivate(@ApiParam(required = true, name = "keyword", value = "关键字")
+    fun searchPrivate(@ApiParam(required = true, name = "userId", value = "userId")
+                      @RequestParam(value = "userId", required = true) userId: String?,
+                      @ApiParam(required = true, name = "keyword", value = "关键字")
                       @RequestParam(value = "keyword", required = true) keyword: String,
                       @ApiParam(required = true, name = "page", value = "页码")
                       @RequestParam(value = "page", required = true) page: Int,
                       @ApiParam(required = true, name = "pageSize", value = "页码")
                       @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        return bookService.searchPrivate(keyword, page, pageSize)
+        return bookService.searchPrivate(userId,keyword, page, pageSize)
     }
 
     @RequestMapping(value = ["/search"], method = [RequestMethod.GET])
     @ApiOperation(value = "根据关键字搜索book列表", notes = "v1.0.0")
-    fun search(@ApiParam(required = false, name = "keyword", value = "关键字")
+    fun search(@ApiParam(required = false, name = "userId", value = "userId")
+               @RequestParam(value = "userId", required = false) userId: String?,
+               @ApiParam(required = false, name = "keyword", value = "关键字")
                @RequestParam(value = "keyword", required = false) keyword: String?,
                @ApiParam(required = true, name = "openType", value = "0 保密 1公开")
                @RequestParam(value = "openType", required = true) openType: Int,
@@ -103,7 +107,7 @@ class BookController {
                @RequestParam(value = "page", required = true) page: Int,
                @ApiParam(required = true, name = "pageSize", value = "页码")
                @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        return bookService.search(keyword, openType, page, pageSize)
+        return bookService.search(userId, keyword, openType, page, pageSize)
     }
 
 }

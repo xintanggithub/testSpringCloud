@@ -74,16 +74,31 @@
 
     <select id="search" parameterType="com.tson.yd.model.book.request.SearchRequest"
             resultType="com.tson.yd.model.book.BookEntity">
-        <if test="keyword!=null">
-            SELECT *
-            FROM book
-            where concat(title, content) like '%${keyword}%'
-            AND openType = #{openType}
+        <if test="userId!=null">
+            <if test="keyword!=null">
+                SELECT *
+                FROM book
+                where concat(title, content) like '%${keyword}%'
+                AND userId = #{userId} AND openType = #{openType}
+            </if>
+            <if test="keyword==null">
+                SELECT *
+                FROM book
+                WHERE userId = #{userId} AND openType = #{openType}
+            </if>
         </if>
-        <if test="keyword==null">
-            SELECT *
-            FROM book
-            WHERE openType = #{openType}
+        <if test="userId==null">
+            <if test="keyword!=null">
+                SELECT *
+                FROM book
+                where concat(title, content) like '%${keyword}%'
+                AND openType = #{openType}
+            </if>
+            <if test="keyword==null">
+                SELECT *
+                FROM book
+                WHERE openType = #{openType}
+            </if>
         </if>
     </select>
 
