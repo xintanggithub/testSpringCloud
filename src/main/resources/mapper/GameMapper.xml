@@ -25,7 +25,7 @@
 
     <select id="queryList" resultType="com.tson.yd.model.game.GameEntity">
         SELECT *
-        FROM games
+        FROM games WHERE concat(tag,title,content) like '%${keyword}%'
     </select>
 
     <delete id="deleteGame" parameterType="java.lang.Integer">

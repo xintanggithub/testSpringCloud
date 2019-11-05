@@ -2,6 +2,7 @@ package com.tson.yd.dao;
 
 import com.tson.yd.model.game.GameEntity;
 import com.tson.yd.model.game.request.GameRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,6 +27,6 @@ public interface GameDao {
      *
      * @return 数据列表
      */
-    List<GameEntity> queryList();
+    List<GameEntity> queryList(@Param(value="keyword") String keyword);
 
 }

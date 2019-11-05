@@ -25,6 +25,6 @@ interface GameService {
      *
      * @return 数据列表
      */
-    fun queryList(page: Int, pageSize: Int): BaseResponse<ListBaseData<GameEntity>>
+    fun queryList(keyword: String?, page: Int, pageSize: Int): BaseResponse<ListBaseData<GameEntity>>
 
 }

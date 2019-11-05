@@ -34,11 +34,13 @@ class GameController {
 
     @RequestMapping(value = ["/queryList"], method = [RequestMethod.GET])
     @ApiOperation(value = "查询game", notes = "v1.0.0")
-    fun queryList(@ApiParam(required = true, name = "page", value = "页码")
+    fun queryList(@ApiParam(required = false, name = "keyword", value = "关键词")
+                  @RequestParam(value = "keyword", required = false) keyword: String?,
+                  @ApiParam(required = true, name = "page", value = "页码")
                   @RequestParam(value = "page", required = true) page: Int,
                   @ApiParam(required = true, name = "pageSize", value = "页码")
                   @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<GameEntity>> {
-        return gameService.queryList(page, pageSize)
+        return gameService.queryList(keyword, page, pageSize)
     }
 
 }
