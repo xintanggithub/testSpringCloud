@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.GameDao">
+
+    <insert id="insertGame" parameterType="com.tson.yd.model.game.request.GameRequest">
+
+        INSERT
+        games
+        (
+        tag,
+        img,
+        html,
+        title,
+        content
+        )
+        VALUES
+        (
+        #{tag},
+        #{img},
+        #{html},
+        #{title},
+        #{content}
+        )
+    </insert>
+
+    <select id="queryList" resultType="com.tson.yd.model.game.GameEntity">
+        SELECT *
+        FROM games
+    </select>
+
+    <delete id="deleteGame" parameterType="java.lang.Integer">
+        DELETE
+        FROM games
+        WHERE id = #{id}
+    </delete>
+
+</mapper>
