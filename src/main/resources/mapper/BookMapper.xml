@@ -79,12 +79,12 @@
                 SELECT *
                 FROM book
                 where concat(title, content) like '%${keyword}%'
-                AND userId = #{userId} AND openType = #{openType}
+                AND userId = #{userId} AND openType = #{openType} ORDER BY createTime DESC
             </if>
             <if test="keyword==null">
                 SELECT *
                 FROM book
-                WHERE userId = #{userId} AND openType = #{openType}
+                WHERE userId = #{userId} AND openType = #{openType} ORDER BY createTime DESC
             </if>
         </if>
         <if test="userId==null">
@@ -92,12 +92,12 @@
                 SELECT *
                 FROM book
                 where concat(title, content) like '%${keyword}%'
-                AND openType = #{openType}
+                AND openType = #{openType} ORDER BY createTime DESC
             </if>
             <if test="keyword==null">
                 SELECT *
                 FROM book
-                WHERE openType = #{openType}
+                WHERE openType = #{openType} ORDER BY createTime DESC
             </if>
         </if>
     </select>
