@@ -82,7 +82,7 @@ class UserServiceImpl : UserService {
             val queryCheck = userDao.queryUserById(userEntity.userId)
             if (null != queryCheck) {
                 val jsonStr = JSON.toJSONString(userEntity)
-                LOGGER.debug(jsonStr)
+                LOGGER.info(jsonStr)
                 val updateUserEntity = JSON.parseObject(jsonStr, UserEntity::class.java)
                 updateUserEntity.updateTime = System.currentTimeMillis() / CharUtils.MIN_1
                 userDao.updateUser(updateUserEntity)

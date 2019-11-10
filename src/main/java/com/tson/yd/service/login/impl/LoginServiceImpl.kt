@@ -29,7 +29,7 @@ class LoginServiceImpl : LoginService {
     private lateinit var userService: UserService
 
     override fun queryLogin(userCode: String): BaseResponse<LoginEntity> {
-        LOGGER.debug("queryLogin ---> userCode = $userCode")
+        LOGGER.info("queryLogin ---> userCode = $userCode")
         return BaseResponse<LoginEntity>().also { root ->
             when (userCode.isEmpty()) {
                 true -> root.setStatus(LogCode.RC_PARAMETER_ERROR)
@@ -49,7 +49,7 @@ class LoginServiceImpl : LoginService {
     }
 
     override fun insertLogin(loginEntity: LoginEntity): BaseResponse<LoginUserIdEntity> {
-        LOGGER.debug("insertLogin ---> request = ${JSON.toJSONString(loginEntity)}")
+        LOGGER.info("insertLogin ---> request = ${JSON.toJSONString(loginEntity)}")
         val response = BaseResponse<LoginUserIdEntity>()
         //需要做参数校验
         if (loginEntity.userCode.isEmpty() || loginEntity.password.isEmpty()) {
@@ -68,7 +68,7 @@ class LoginServiceImpl : LoginService {
         val queryLogin = queryLogin(loginEntity.userCode)
         //如果有查询到，返回：用户已存在
         if (queryLogin.resultCode == LogCode.RC_SUCCESS.code) {
-            LOGGER.debug("insertLogin ---> User already exists => ${queryLogin.data}")
+            LOGGER.info("insertLogin ---> User already exists => ${queryLogin.data}")
             return response.also {
                 it.setStatus(LogCode.RC_USER_NOT_NONE)
             }
@@ -77,10 +77,10 @@ class LoginServiceImpl : LoginService {
         val insertUser = userService.insertUser(InsertUserRequest().also {
             it.userName = loginEntity.userCode
         })
-        LOGGER.debug("insertLogin ---> insertUser end => $insertUser")
+        LOGGER.info("insertLogin ---> insertUser end => $insertUser")
         //如果插入用户信息未成功，提示失败
         if (insertUser.resultCode != LogCode.RC_SUCCESS.code) {
-            LOGGER.debug("insertLogin ---> insertUser error => $insertUser")
+            LOGGER.info("insertLogin ---> insertUser error => $insertUser")
             return response.also {
                 it.resultCode = insertUser.resultCode
                 it.resultMessage = insertUser.resultMessage
@@ -89,10 +89,10 @@ class LoginServiceImpl : LoginService {
         //userId赋值
         loginEntity.userId = insertUser.data
         loginEntity.password = CharUtils.getPassword(loginEntity.password)
-        LOGGER.debug("insertLogin ---> insertLogin  userCode = ${loginEntity.userCode}  password = ${loginEntity.password}")
+        LOGGER.info("insertLogin ---> insertLogin  userCode = ${loginEntity.userCode}  password = ${loginEntity.password}")
         //插入user信息成功，开始插入login信息
         loginDao.insertLogin(loginEntity)
-        LOGGER.debug("insertLogin ---> insertLogin end")
+        LOGGER.info("insertLogin ---> insertLogin end")
         response.data = LoginUserIdEntity().also {
             it.userId = insertUser.data
         }
@@ -101,7 +101,7 @@ class LoginServiceImpl : LoginService {
     }
 
     override fun login(loginEntity: LoginEntity): BaseResponse<LoginUserIdEntity> {
-        LOGGER.debug("login ---> request = ${JSON.toJSONString(loginEntity)}")
+        LOGGER.info("login ---> request = ${JSON.toJSONString(loginEntity)}")
         val response = BaseResponse<LoginUserIdEntity>()
         if (loginEntity.password.isEmpty() || loginEntity.userCode.isEmpty()) {
             return response.also {
@@ -150,9 +150,9 @@ class LoginServiceImpl : LoginService {
             }
         }
 
-        LOGGER.debug("old password => ${loginEntity.password}")
+        LOGGER.info("old password => ${loginEntity.password}")
         loginEntity.password = CharUtils.getPassword(loginEntity.password)
-        LOGGER.debug("new password => ${loginEntity.password}")
+        LOGGER.info("new password => ${loginEntity.password}")
 
         if (requestQuery.data.password==loginEntity.password){
             return response.also {

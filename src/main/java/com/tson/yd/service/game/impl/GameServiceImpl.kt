@@ -24,7 +24,7 @@ class GameServiceImpl : GameService {
     private lateinit var gameDao: GameDao
 
     override fun insertGame(request: GameRequest): BaseResponse<String> {
-        LOGGER.debug("insert -- > ", request)
+        LOGGER.info("insert -- > ", request)
         val response = BaseResponse<String>()
         gameDao.insertGame(request)
         return response.also {
@@ -33,7 +33,7 @@ class GameServiceImpl : GameService {
     }
 
     override fun deleteGame(id: Int): BaseResponse<String> {
-        LOGGER.debug("deleteGame -- > ", id)
+        LOGGER.info("deleteGame -- > ", id)
         val response = BaseResponse<String>()
         gameDao.deleteGame(id)
         return response.also {
@@ -42,7 +42,7 @@ class GameServiceImpl : GameService {
     }
 
     override fun queryList(keyword: String?,page: Int, pageSize: Int): BaseResponse<ListBaseData<GameEntity>> {
-        LOGGER.debug("queryList -- > page = $page    pageSize = $pageSize")
+        LOGGER.info("queryList -- > page = $page    pageSize = $pageSize")
         val response = BaseResponse<ListBaseData<GameEntity>>()
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
         val pageInfo = PageInfo(gameDao.queryList(keyword))

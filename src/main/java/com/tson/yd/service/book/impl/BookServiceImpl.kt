@@ -183,7 +183,7 @@ class BookServiceImpl : BookService {
     }
 
     override fun search(userId: String?, keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        LOGGER.debug("userId=$userId  keyword=$keyword  openType=$openType")
+        LOGGER.info("userId=$userId  keyword=$keyword  openType=$openType")
         val response = BaseResponse<ListBaseData<BookEntity>>()
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
         val dt=SearchRequest().also {

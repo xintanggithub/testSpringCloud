@@ -117,7 +117,7 @@ class EmailServiceImpl : EmailService {
             return response
         }
         val verificationCode = CharUtils.verificationCode()
-        LOGGER.debug("sendVerificationCode  ----> userCode = $userCode       //// verificationCode = $verificationCode")
+        LOGGER.info("sendVerificationCode  ----> userCode = $userCode       //// verificationCode = $verificationCode")
         val result = insertData(InsertEmailRequest().also {
             it.userCode = userCode
             it.verificationCode = verificationCode
