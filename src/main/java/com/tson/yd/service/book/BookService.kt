@@ -35,7 +35,7 @@ interface BookService {
      * @param bookId bookId
      * @return book信息
      */
-    fun queryBook(userId: String, bookId: String): BaseResponse<BookEntity>
+    fun queryBook(userId: String?, bookId: String): BaseResponse<BookEntity>
 
     /**
      * 查询该用户的所有book

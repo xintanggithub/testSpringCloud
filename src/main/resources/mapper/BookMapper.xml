@@ -11,6 +11,7 @@
         title,
         splash,
         img,
+        openType,
         content
         )
         VALUES
@@ -20,6 +21,7 @@
         #{title},
         #{splash},
         #{img},
+        #{openType},
         #{content}
         )
     </insert>
@@ -56,8 +58,12 @@
     <select id="queryBook" resultType="com.tson.yd.model.book.BookEntity">
         SELECT *
         FROM book
-        WHERE userId = #{userId}
-          AND bookId = #{bookId}
+        WHERE
+        <if test="userId!=null">
+            userId = #{userId}
+            AND
+        </if>
+        bookId = #{bookId}
     </select>
 
     <select id="queryBooksByUser" resultType="com.tson.yd.model.book.BookEntity">

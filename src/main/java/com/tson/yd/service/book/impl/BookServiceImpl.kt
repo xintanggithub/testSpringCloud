@@ -10,7 +10,6 @@ import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 import com.tson.yd.model.book.request.SearchRequest
 import com.tson.yd.service.book.BookService
-import com.tson.yd.service.email.impl.EmailServiceImpl
 import com.tson.yd.service.user.impl.UserServiceImpl
 import com.tson.yd.utils.CharUtils
 import org.slf4j.LoggerFactory
@@ -74,20 +73,23 @@ class BookServiceImpl : BookService {
         return response
     }
 
-    override fun queryBook(userId: String, bookId: String): BaseResponse<BookEntity> {
+    override fun queryBook(userId: String?, bookId: String): BaseResponse<BookEntity> {
         val response = BaseResponse<BookEntity>()
-        if (userId.isEmpty() || bookId.isEmpty()) {
+//        if (userId.isEmpty() || bookId.isEmpty()) {
+        if (bookId.isEmpty()) {
             return response.also {
                 it.setStatus(LogCode.RC_PARAMETER_ERROR)
             }
         }
-        val queryUser = userServiceImpl.queryUserById(userId)
-        if (queryUser.resultCode != LogCode.RC_SUCCESS.code) {
-            return response.also {
-                it.resultCode = queryUser.resultCode
-                it.resultMessage = queryUser.resultMessage
-            }
-        }
+//        val queryUser = userServiceImpl.queryUserById(userId)
+//        if (queryUser.resultCode != LogCode.RC_SUCCESS.code) {
+//            return response.also {
+//                it.resultCode = queryUser.resultCode
+//                it.resultMessage = queryUser.resultMessage
+//            }
+//        }
+
+
         return response.also {
             it.setStatus(LogCode.RC_SUCCESS)
             it.data = bookDao.queryBook(userId, bookId)
@@ -186,10 +188,10 @@ class BookServiceImpl : BookService {
         LOGGER.info("userId=$userId  keyword=$keyword  openType=$openType")
         val response = BaseResponse<ListBaseData<BookEntity>>()
         PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
-        val dt=SearchRequest().also {
+        val dt = SearchRequest().also {
             it.keyword = keyword
             it.openType = openType
-            if (!userId.isNullOrEmpty()){
+            if (!userId.isNullOrEmpty()) {
                 it.userId = userId
             }
         }

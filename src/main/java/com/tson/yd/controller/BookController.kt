@@ -42,8 +42,8 @@ class BookController {
 
     @RequestMapping(value = ["/queryBook"], method = [RequestMethod.GET])
     @ApiOperation(value = "根据用户和bookId查询book", notes = "v1.0.0")
-    fun queryBook(@ApiParam(required = true, name = "userId", value = "用户ID")
-                  @RequestParam(value = "userId", required = true) userId: String,
+    fun queryBook(@ApiParam(required = false, name = "userId", value = "用户ID")
+                  @RequestParam(value = "userId", required = false) userId: String?,
                   @ApiParam(required = true, name = "bookId", value = "bookID")
                   @RequestParam(value = "bookId", required = true) bookId: String): BaseResponse<BookEntity> {
         return bookService.queryBook(userId, bookId)
@@ -92,7 +92,7 @@ class BookController {
                       @RequestParam(value = "page", required = true) page: Int,
                       @ApiParam(required = true, name = "pageSize", value = "页码")
                       @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
-        return bookService.searchPrivate(userId,keyword, page, pageSize)
+        return bookService.searchPrivate(userId, keyword, page, pageSize)
     }
 
     @RequestMapping(value = ["/search"], method = [RequestMethod.GET])
