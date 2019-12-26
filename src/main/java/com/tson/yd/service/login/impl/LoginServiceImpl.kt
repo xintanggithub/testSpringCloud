@@ -10,6 +10,7 @@ import com.tson.yd.model.request.InsertUserRequest
 import com.tson.yd.service.login.LoginService
 import com.tson.yd.service.user.UserService
 import com.tson.yd.utils.CharUtils
+import com.tson.yd.utils.token.JwtUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -121,6 +122,7 @@ class LoginServiceImpl : LoginService {
             if (CharUtils.getPassword(loginEntity.password) == queryLogin.data.password) {
                 response.data = LoginUserIdEntity().also {
                     it.userId = queryLogin.data.userId
+                    it.accessToken = JwtUtils.create(queryLogin.data.userId, loginEntity.userCode)
                 }
                 response.setStatus(LogCode.RC_SUCCESS)
             } else {
@@ -154,7 +156,7 @@ class LoginServiceImpl : LoginService {
         loginEntity.password = CharUtils.getPassword(loginEntity.password)
         LOGGER.info("new password => ${loginEntity.password}")
 
-        if (requestQuery.data.password==loginEntity.password){
+        if (requestQuery.data.password == loginEntity.password) {
             return response.also {
                 it.setStatus(LogCode.RC_USER_PASSWORD_EQUALLY)
             }
