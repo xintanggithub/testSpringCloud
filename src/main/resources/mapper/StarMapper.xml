@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.StarDao">
+
+    <insert id="insertStar" parameterType="com.tson.yd.model.star.BaseStar">
+        INSERT
+        star
+        (
+        userId,
+        starUserId,
+        starUserName,
+        starStatus
+        )
+        VALUES
+        (
+        #{userId},
+        #{starUserId},
+        #{starUserName},
+        #{starStatus}
+        )
+    </insert>
+
+    <update id="updateStatus" parameterType="com.tson.yd.model.star.BaseStar">
+        UPDATE star
+        SET starStatus = #{starStatus}
+        WHERE userId = #{userId}
+          AND starUserId = #{starUserId}
+    </update>
+
+    <select id="queryBStar" resultType="java.lang.Integer">
+        select count(*)
+        from star
+        where userId = #{userId}
+    </select>
+
+    <select id="queryWStar" resultType="java.lang.Integer">
+        select count(*)
+        from star
+        where starUserId = #{starUserId}
+    </select>
+
+    <select id="queryStarList" resultType="com.tson.yd.model.star.StarResponse">
+        select
+            id,
+            userId,
+            starUserId,
+            starUserName,
+            starStatus,
+            UNIX_TIMESTAMP
+                (
+                    createTime
+                )
+                createTime
+                ,
+            UNIX_TIMESTAMP
+                (
+                    updateTime
+                )
+                updateTime
+        from star
+        where userId = #{userId}
+    </select>
+
+    <select id="queryWStarList" resultType="com.tson.yd.model.star.StarResponse">
+        select
+            id,
+            userId,
+            starUserId,
+            starUserName,
+            starStatus,
+            UNIX_TIMESTAMP
+                (
+                    createTime
+                )
+                createTime
+                ,
+            UNIX_TIMESTAMP
+                (
+                    updateTime
+                )
+                updateTime
+        from star
+        where starUserId = #{starUserId}
+    </select>
+
+    <select id="queryRetryStar" resultType="java.lang.Integer">
+        select count(*)
+        from star
+        where starUserId = #{starUserId}
+          and userId = #{userId}
+    </select>
+
+</mapper>
