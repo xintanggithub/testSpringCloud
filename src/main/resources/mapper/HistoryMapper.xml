@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.HistoryDao">
+
+    <insert id="insertHistory" parameterType="com.tson.yd.model.history.BaseHistory">
+        INSERT
+        history
+        (
+        userId,
+        type,
+        businessId
+        )
+        VALUES
+        (
+        #{userId},
+        #{type},
+        #{businessId}
+        )
+    </insert>
+
+    <select id="queryHistoryByUser" resultType="com.tson.yd.model.history.HistoryResponse">
+        SELECT
+            id,
+            userId,
+            `type`,
+            businessId,
+            delStatus,
+            UNIX_TIMESTAMP
+                (
+                    createTime
+                )
+                createTime
+                ,
+            UNIX_TIMESTAMP
+                (
+                    updateTime
+                )
+                updateTime
+        FROM history
+        WHERE userId = #{userId}
+    </select>
+
+    <select id="queryHistoryByType" resultType="com.tson.yd.model.history.HistoryResponse">
+        SELECT
+            id,
+            userId,
+            `type`,
+            businessId,
+            delStatus,
+            UNIX_TIMESTAMP
+                (
+                    createTime
+                )
+                createTime
+                ,
+            UNIX_TIMESTAMP
+                (
+                    updateTime
+                )
+                updateTime
+        FROM history
+        WHERE `type` = #{type}
+    </select>
+
+    <update id="updateDel" parameterType="com.tson.yd.model.history.BaseHistory">
+        UPDATE history
+        SET delStatus=#{delStatus}
+        WHERE userId = #{userId}
+          and businessId = #{businessId}
+    </update>
+
+</mapper>

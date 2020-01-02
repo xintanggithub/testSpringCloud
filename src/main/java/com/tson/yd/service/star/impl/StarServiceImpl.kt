@@ -7,7 +7,6 @@ import com.tson.yd.base.BaseResponse
 import com.tson.yd.base.ListBaseData
 import com.tson.yd.base.LogCode
 import com.tson.yd.dao.StarDao
-import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.star.BaseStar
 import com.tson.yd.model.star.StarResponse
 import com.tson.yd.service.star.StarService
