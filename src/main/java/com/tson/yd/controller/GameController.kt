@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController("GameController")
 @RequestMapping("/v1/game")
-@Api(value = "GameController 配置", description = "game", tags = ["game"])
+@Api(value = "GameController 游戏", description = "game", tags = ["game"])
 class GameController {
 
     @Autowired

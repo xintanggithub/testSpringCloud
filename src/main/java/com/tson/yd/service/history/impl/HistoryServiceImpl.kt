@@ -97,7 +97,7 @@ class HistoryServiceImpl : HistoryService {
 
     override fun updateDel(baseHistory: BaseHistory): BaseResponse<String> {
         val response = BaseResponse<String>()
-        if (StringUtils.isEmpty(baseHistory.userId) || baseHistory.businessId != 0 ||
+        if (StringUtils.isEmpty(baseHistory.userId) || baseHistory.businessId == 0 ||
                 (baseHistory.delStatus != 0 && baseHistory.delStatus != 1)) {
             response.setStatus(LogCode.RC_PARAMETER_ERROR)
             return response
