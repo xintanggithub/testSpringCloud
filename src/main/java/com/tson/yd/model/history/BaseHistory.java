@@ -15,6 +15,9 @@ public class BaseHistory {
     @ApiModelProperty(value = "对应业务ID")
     private int businessId;
 
+    @ApiModelProperty(value = "对应业务名")
+    private String businessName;
+
     @ApiModelProperty(value = "删除状态：1 已删除  0未删除")
     private int delStatus;
 
@@ -48,5 +51,13 @@ public class BaseHistory {
 
     public void setDelStatus(int delStatus) {
         this.delStatus = delStatus;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 }

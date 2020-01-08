@@ -37,4 +37,15 @@ public interface HistoryDao {
      */
     void updateDel(BaseHistory baseHistory);
 
+    /**
+     * 更新记录数据
+     */
+    void updateAll(BaseHistory baseHistory);
+
+    /**
+     * 通过所有条件查询历史记录
+     * <br/>主要用于校验是否已有该历史记录
+     */
+    List<HistoryResponse> queryHistoryByAll(BaseHistory baseHistory);
+
 }

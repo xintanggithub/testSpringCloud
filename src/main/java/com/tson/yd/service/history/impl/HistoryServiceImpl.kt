@@ -24,14 +24,27 @@ class HistoryServiceImpl : HistoryService {
 
     override fun insertHistory(baseHistory: BaseHistory): BaseResponse<String> {
         val response = BaseResponse<String>()
-        if (StringUtils.isEmpty(baseHistory.userId) || StringUtils.isEmpty(baseHistory.type)) {
+        if (StringUtils.isEmpty(baseHistory.userId) || StringUtils.isEmpty(baseHistory.type)
+                || StringUtils.isEmpty(baseHistory.businessName)) {
             response.setStatus(LogCode.RC_PARAMETER_ERROR)
             return response
         }
         val responseByUserId = userService.queryUserById(baseHistory.userId)
         if (responseByUserId.resultCode == LogCode.RC_SUCCESS.code) {
-            historyDao.insertHistory(baseHistory)
-            response.setStatus(LogCode.RC_SUCCESS)
+
+            val resultCheck = historyDao.queryHistoryByAll(BaseHistory().also {
+                it.businessId = baseHistory.businessId
+                it.businessName = baseHistory.businessName
+                it.type = baseHistory.type
+                it.userId = baseHistory.userId
+            })
+            if (null != resultCheck && resultCheck.size > 0) {
+                historyDao.updateAll(baseHistory)
+                response.setStatus(LogCode.RC_SUCCESS)
+            } else {
+                historyDao.insertHistory(baseHistory)
+                response.setStatus(LogCode.RC_SUCCESS)
+            }
         } else {
             response.resultCode = responseByUserId.resultCode
             response.resultMessage = responseByUserId.resultMessage
