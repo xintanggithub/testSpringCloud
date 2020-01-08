@@ -38,6 +38,7 @@
                 updateTime
         FROM history
         WHERE userId = #{userId}
+          AND delStatus = 0
     </select>
 
     <select id="queryHistoryByType" resultType="com.tson.yd.model.history.HistoryResponse">
@@ -60,6 +61,7 @@
                 updateTime
         FROM history
         WHERE `type` = #{type}
+          AND delStatus = 0
     </select>
 
     <update id="updateDel" parameterType="com.tson.yd.model.history.BaseHistory">
