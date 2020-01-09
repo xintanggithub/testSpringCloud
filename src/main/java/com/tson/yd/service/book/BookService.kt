@@ -2,6 +2,7 @@ package com.tson.yd.service.book
 
 import com.tson.yd.base.BaseResponse
 import com.tson.yd.base.ListBaseData
+import com.tson.yd.model.book.BookAllEntity
 import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 
@@ -44,6 +45,14 @@ interface BookService {
      * @return book列表
      */
     fun queryBooksByUser(userId: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
+
+    /**
+     * 查询该用户的所有book
+     *
+     * @param userId 用户ID
+     * @return book列表
+     */
+    fun queryBookAllByUser(userId: String?, keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookAllEntity>>
 
     /**
      * 查询所有公开的book

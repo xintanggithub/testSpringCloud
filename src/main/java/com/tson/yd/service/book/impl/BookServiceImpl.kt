@@ -6,12 +6,14 @@ import com.tson.yd.base.BaseResponse
 import com.tson.yd.base.ListBaseData
 import com.tson.yd.base.LogCode
 import com.tson.yd.dao.BookDao
+import com.tson.yd.model.book.BookAllEntity
 import com.tson.yd.model.book.BookEntity
 import com.tson.yd.model.book.InsertBootEntity
 import com.tson.yd.model.book.request.SearchRequest
 import com.tson.yd.service.book.BookService
 import com.tson.yd.service.user.impl.UserServiceImpl
 import com.tson.yd.utils.CharUtils
+import org.apache.commons.beanutils.BeanUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -148,6 +150,40 @@ class BookServiceImpl : BookService {
             it.setStatus(LogCode.RC_SUCCESS)
         }
     }
+
+    override fun queryBookAllByUser(userId: String?, keyword: String?, openType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookAllEntity>> {
+        val response = BaseResponse<ListBaseData<BookAllEntity>>()
+        val result = search(userId, keyword, openType, page, pageSize)
+        if (result.resultCode == LogCode.RC_SUCCESS.code) {
+            val list = result.data.lists
+            val newList = mutableListOf<BookAllEntity>()
+            list.forEach { item ->
+                val queryUser = userServiceImpl.queryUserById(item.userId)
+                val itemData = BookAllEntity()
+                BeanUtils.copyProperties(itemData, item)
+                if (queryUser.resultCode == LogCode.RC_SUCCESS.code) {
+                    itemData.run {
+                        userName = queryUser.data.userName
+                        userHead = queryUser.data.img
+                    }
+                }
+
+                newList.add(itemData)
+            }
+            response.data = ListBaseData<BookAllEntity>().also {
+                it.lists = newList
+                it.page = result.data.page
+                it.pageSize = result.data.pageSize
+                it.totalCount = result.data.totalCount
+            }
+            response.setStatus(LogCode.RC_SUCCESS)
+        } else {
+            response.resultCode = result.resultCode
+            response.resultMessage = result.resultMessage
+        }
+        return response
+    }
+
 
     override fun queryBookByOpenType(isOpen: Boolean, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
         val response = BaseResponse<ListBaseData<BookEntity>>()
