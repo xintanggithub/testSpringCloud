@@ -119,6 +119,45 @@ class BookServiceImpl : BookService {
         return response
     }
 
+    override fun queryBooksBySplash(splash: String, keyword: String?, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookAllEntity>> {
+        val response = BaseResponse<ListBaseData<BookAllEntity>>()
+        if (splash.isEmpty()) {
+            return response.also {
+                it.setStatus(LogCode.RC_PARAMETER_ERROR)
+            }
+        }
+        PageHelper.startPage<Any>(if (page <= 0) 1 else page, if (pageSize <= 0) 10 else pageSize)
+        val pageInfo = PageInfo(bookDao.queryBooksBySplash(splash, keyword))
+        if (pageInfo.list.isEmpty()) {
+            response.resultCode = LogCode.RC_RESULT_EMPTY.code
+            response.resultMessage = LogCode.RC_RESULT_EMPTY.message
+            return response
+        }
+        val newList = mutableListOf<BookAllEntity>()
+        pageInfo.list.forEach { item ->
+            val queryUser = userServiceImpl.queryUserById(item.userId)
+            val itemData = BookAllEntity()
+            BeanUtils.copyProperties(itemData, item)
+            if (queryUser.resultCode == LogCode.RC_SUCCESS.code) {
+                itemData.run {
+                    userName = queryUser.data.userName
+                    userHead = queryUser.data.img
+                }
+            }
+
+            newList.add(itemData)
+        }
+        return response.also {
+            it.data = ListBaseData<BookAllEntity>().also { l ->
+                l.lists = newList
+                l.page = pageInfo.pageNum
+                l.pageSize = pageInfo.pageSize
+                l.totalCount = pageInfo.total.toInt()
+            }
+            it.setStatus(LogCode.RC_SUCCESS)
+        }
+    }
+
     override fun queryBooksByUser(userId: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>> {
         val response = BaseResponse<ListBaseData<BookEntity>>()
         if (userId.isEmpty()) {

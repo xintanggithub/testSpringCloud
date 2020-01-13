@@ -65,4 +65,13 @@ public interface BookDao {
      */
     List<BookEntity> search(SearchRequest request);
 
+    /**
+     * 查询精贴
+     *
+     * @param splash 1：精 2：普通
+     * @return 数据
+     */
+    List<BookEntity> queryBooksBySplash(String splash, String keyword);
+
+
 }

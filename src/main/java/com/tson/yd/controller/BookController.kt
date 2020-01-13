@@ -126,4 +126,18 @@ class BookController {
         return bookService.queryBookAllByUser(userId, keyword, openType, page, pageSize)
     }
 
+    @RequestMapping(value = ["/queryBooksBySplash"], method = [RequestMethod.GET])
+    @ApiOperation(value = "book加精列表", notes = "v1.0.0")
+    fun queryBooksBySplash(@ApiParam(required = false, name = "splash", value = "userId")
+                           @RequestParam(value = "splash", required = false) splash: String,
+                           @ApiParam(required = false, name = "keyword", value = "关键字")
+                           @RequestParam(value = "keyword", required = false) keyword: String?,
+                           @ApiParam(required = true, name = "page", value = "页码")
+                           @RequestParam(value = "page", required = true) page: Int,
+                           @ApiParam(required = true, name = "pageSize", value = "页码")
+                           @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<BookAllEntity>> {
+        return bookService.queryBooksBySplash(splash, keyword, page, pageSize)
+    }
+
+
 }

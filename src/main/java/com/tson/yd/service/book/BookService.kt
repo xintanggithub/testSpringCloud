@@ -86,4 +86,12 @@ interface BookService {
      */
     fun searchPrivate(userId: String?, keyword: String, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookEntity>>
 
+    /**
+     * 查询精贴
+     *
+     * @param splash 1：精 2：普通
+     * @return 数据
+     */
+    fun queryBooksBySplash(splash: String, keyword: String?, page: Int, pageSize: Int): BaseResponse<ListBaseData<BookAllEntity>>
+
 }

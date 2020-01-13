@@ -4,26 +4,22 @@
 
     <insert id="insertBook" parameterType="com.tson.yd.model.book.InsertBootEntity">
         INSERT
-        book
-        (
-        userId,
-        bookId,
-        title,
-        splash,
-        img,
-        openType,
-        content
-        )
+            book
+        (userId,
+         bookId,
+         title,
+         splash,
+         img,
+         openType,
+         content)
         VALUES
-        (
-        #{userId},
-        #{bookId},
-        #{title},
-        #{splash},
-        #{img},
-        #{openType},
-        #{content}
-        )
+        (#{userId},
+         #{bookId},
+         #{title},
+         #{splash},
+         #{img},
+         #{openType},
+         #{content})
     </insert>
 
     <delete id="deleteBook">
@@ -70,6 +66,13 @@
         SELECT *
         FROM book
         WHERE userId = #{userId}
+    </select>
+
+    <select id="queryBooksBySplash" resultType="com.tson.yd.model.book.BookEntity">
+        SELECT *
+        FROM book
+        WHERE splash = #{splash}
+        <if test="keyword!=null">AND CONCAT(title,content) like '%${keyword}%'</if>
     </select>
 
     <select id="queryBookByOpenType" resultType="com.tson.yd.model.book.BookEntity">

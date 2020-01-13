@@ -9,7 +9,7 @@ public class UpdateBookEntity {
     @ApiModelProperty(value = "标题")
     private String title;
 
-    @ApiModelProperty(value = "封面")
+    @ApiModelProperty(value = "封面 1 精  2 普通")
     private String splash;
 
     @ApiModelProperty(value = "图片")
