@@ -128,7 +128,7 @@ class BookController {
 
     @RequestMapping(value = ["/queryBooksBySplash"], method = [RequestMethod.GET])
     @ApiOperation(value = "book加精列表", notes = "v1.0.0")
-    fun queryBooksBySplash(@ApiParam(required = false, name = "splash", value = "userId")
+    fun queryBooksBySplash(@ApiParam(required = false, name = "splash", value = "splash")
                            @RequestParam(value = "splash", required = false) splash: String,
                            @ApiParam(required = false, name = "keyword", value = "关键字")
                            @RequestParam(value = "keyword", required = false) keyword: String?,

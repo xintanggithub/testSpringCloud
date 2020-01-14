@@ -86,7 +86,7 @@
     <select id="queryBooksBySplash" resultType="com.tson.yd.model.book.BookEntity">
         SELECT *
         FROM book
-        WHERE splash = #{splash}
+        WHERE splash = #{splash} and openType = 1
         <if test="keyword!=null">AND CONCAT(title,content) like '%${keyword}%'</if>
     </select>
 
