@@ -4,22 +4,31 @@
 
     <insert id="insertBook" parameterType="com.tson.yd.model.book.InsertBootEntity">
         INSERT
-            book
+        book
         (userId,
-         bookId,
-         title,
-         splash,
-         img,
-         openType,
-         content)
+        bookId,
+        title,
+        splash,
+        img,
+        openType,
+        content,
+        description,
+        bookType)
         VALUES
         (#{userId},
-         #{bookId},
-         #{title},
-         #{splash},
-         #{img},
-         #{openType},
-         #{content})
+        #{bookId},
+        #{title},
+        #{splash},
+        #{img},
+        #{openType},
+        #{content}
+        <if test="description!=null">
+            ,#{description}
+        </if>
+
+        <if test="bookType!=null">
+            ,#{bookType}
+        </if>)
     </insert>
 
     <delete id="deleteBook">
@@ -46,6 +55,12 @@
         </if>
         <if test="openType!=null">
             openType=#{openType},
+        </if>
+        <if test="description!=null">
+            description=#{description},
+        </if>
+        <if test="bookType!=null">
+            bookType=#{bookType},
         </if>
         bookId=#{bookId}
         WHERE userId=#{userId} AND bookId=#{bookId}
