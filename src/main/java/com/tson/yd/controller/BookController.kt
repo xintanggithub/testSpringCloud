@@ -117,7 +117,7 @@ class BookController {
                            @RequestParam(value = "userId", required = false) userId: String?,
                            @ApiParam(required = false, name = "keyword", value = "关键字")
                            @RequestParam(value = "keyword", required = false) keyword: String?,
-                           @ApiParam(required = true, name = "openType", value = "0 保密 1公开")
+                           @ApiParam(required = true, name = "openType", value = "0 保密 1公开 2所有")
                            @RequestParam(value = "openType", required = true) openType: Int,
                            @ApiParam(required = true, name = "page", value = "页码")
                            @RequestParam(value = "page", required = true) page: Int,

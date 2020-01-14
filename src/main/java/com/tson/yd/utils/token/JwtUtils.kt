@@ -46,7 +46,7 @@ object JwtUtils {
      * 验证jwt，并返回数据
      */
     @Throws(Exception::class)
-    fun verifyToken(token: String): Map<String, String> {
+    fun verifyToken(token: String): HashMap<String, String> {
         val algorithm: Algorithm
         val map: Map<String, Claim>
         try {

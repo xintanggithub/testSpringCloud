@@ -87,7 +87,7 @@
         SELECT *
         FROM book
         WHERE splash = #{splash} and openType = 1
-        <if test="keyword!=null">AND CONCAT(title,content) like '%${keyword}%'</if>
+        <if test="keyword!=null">AND CONCAT(title, content,img) like '%${keyword}%'</if>
     </select>
 
     <select id="queryBookByOpenType" resultType="com.tson.yd.model.book.BookEntity">
@@ -102,26 +102,40 @@
             <if test="keyword!=null">
                 SELECT *
                 FROM book
-                where concat(title, content) like '%${keyword}%'
-                AND userId = #{userId} AND openType = #{openType} ORDER BY createTime DESC
+                where concat(title, content,img) like '%${keyword}%'
+                AND userId = #{userId}
+                <if test="openType!=2">
+                    AND openType = #{openType}
+                </if>
+                ORDER BY createTime DESC
             </if>
             <if test="keyword==null">
                 SELECT *
                 FROM book
-                WHERE userId = #{userId} AND openType = #{openType} ORDER BY createTime DESC
+                WHERE userId = #{userId}
+                <if test="openType!=2">
+                    AND openType = #{openType}
+                </if>
+                ORDER BY createTime DESC
             </if>
         </if>
         <if test="userId==null">
             <if test="keyword!=null">
                 SELECT *
                 FROM book
-                where concat(title, content) like '%${keyword}%'
-                AND openType = #{openType} ORDER BY createTime DESC
+                where concat(title, content,img) like '%${keyword}%'
+                <if test="openType!=2">
+                    AND openType = #{openType}
+                </if>
+                ORDER BY createTime DESC
             </if>
             <if test="keyword==null">
                 SELECT *
                 FROM book
-                WHERE openType = #{openType} ORDER BY createTime DESC
+                <if test="openType!=2">
+                    WHERE openType = #{openType}
+                </if>
+                ORDER BY createTime DESC
             </if>
         </if>
     </select>

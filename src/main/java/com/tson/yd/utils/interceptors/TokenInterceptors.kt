@@ -18,21 +18,26 @@ class TokenInterceptors : HandlerInterceptor {
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        val accessToken = request.getHeader("AccessToken")
-        LOGGER.info("headers  ==> ${JSON.toJSONString(request.headerNames)}")
-        LOGGER.info("method ===> ${request.method}")
-        if (request.method == "OPTIONS") {
-            return true
-        }
-        val param = getAllRequestParam(request)
-        if (StringUtils.isEmpty(accessToken) || !param.containsKey("userId")) {
-            LOGGER.info("accessToken为空或者param中无userId，鉴权失败")
-            return false
-        }
-        val map = JwtUtils.verifyToken(accessToken)
-        if (map["userId"] != param["userId"]) {
-            return false
-        }
+//        val accessToken = request.getHeader("AccessToken")
+//        LOGGER.info("headers  ==> ${JSON.toJSONString(request.headerNames)}")
+//        LOGGER.info("method ===> ${request.method}")
+//        if (request.method == "OPTIONS") {
+//            return true
+//        }
+//        val param = getAllRequestParam(request)
+//        if (StringUtils.isEmpty(accessToken) || !param.containsKey("userId")) {
+//            LOGGER.info("accessToken为空或者param中无userId，鉴权失败")
+//            return false
+//        }
+//        var map: HashMap<String, String>
+//        try {
+//            map = JwtUtils.verifyToken(accessToken)
+//        } catch (e: Exception) {
+//            return false
+//        }
+//        if (map["userId"] != param["userId"]) {
+//            return false
+//        }
         return true
     }
 
