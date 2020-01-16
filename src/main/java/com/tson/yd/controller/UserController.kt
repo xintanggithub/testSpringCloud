@@ -3,8 +3,10 @@ package com.tson.yd.controller
 import com.tson.yd.base.BaseResponse
 import com.tson.yd.base.ListBaseData
 import com.tson.yd.model.UserEntity
+import com.tson.yd.model.header.HeadEntity
 import com.tson.yd.model.request.InsertUserRequest
 import com.tson.yd.model.request.UpdateUserRequest
+import com.tson.yd.service.user.HeaderService
 import com.tson.yd.service.user.UserService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -19,6 +21,8 @@ class UserController {
 
     @Autowired
     private lateinit var userService: UserService
+    @Autowired
+    private lateinit var headerService: HeaderService
 
     @RequestMapping(value = ["/queryUsers"], method = [RequestMethod.GET])
 //    @ApiOperation(value = "分页查询用户信息", notes = "v1.0.0")
@@ -58,5 +62,9 @@ class UserController {
                    userId: String): BaseResponse<*> {
         return userService.deleteUser(userId)
     }
+
+    @RequestMapping(value = ["/queryHead"], method = [RequestMethod.GET])
+    @ApiOperation(value = "获取头像", notes = "v1.0.0")
+    fun queryHead(): BaseResponse<ListBaseData<HeadEntity>> = headerService.queryHead()
 
 }
