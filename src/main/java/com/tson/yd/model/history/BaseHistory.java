@@ -13,7 +13,7 @@ public class BaseHistory {
     private String type;
 
     @ApiModelProperty(value = "对应业务ID")
-    private int businessId;
+    private String businessId;
 
     @ApiModelProperty(value = "对应业务名")
     private String businessName;
@@ -37,11 +37,11 @@ public class BaseHistory {
         this.type = type;
     }
 
-    public int getBusinessId() {
+    public String getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(int businessId) {
+    public void setBusinessId(String businessId) {
         this.businessId = businessId;
     }
 
