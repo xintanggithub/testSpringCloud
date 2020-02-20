@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tson.yd.dao.CollectionDao">
+
+    <insert id="insertCollection" parameterType="com.tson.yd.model.collection.CollectionEntity">
+        INSERT
+        collection
+        (
+        userId,
+        gameId,
+        collectionType
+        )
+        VALUES
+        (
+        #{userId},
+        #{gameId},
+        #{collectionType}
+        )
+    </insert>
+
+    <delete id="deleteCollection">
+        DELETE
+        FROM collection
+        WHERE userId = #{userId}
+          AND gameId = #{gameId}
+          AND collectionType = #{collectionType}
+    </delete>
+
+    <select id="queryCollectionByUser" resultType="com.tson.yd.model.collection.CollectionResponseEntity">
+        SELECT *
+        FROM collection
+        WHERE userId = #{userId}
+          AND collectionType = #{collectionType}
+    </select>
+
+    <select id="queryCollection" resultType="com.tson.yd.model.collection.CollectionResponseEntity">
+        SELECT *
+        FROM collection
+        WHERE userId = #{userId}
+          AND gameId = #{gameId}
+          AND collectionType = #{collectionType}
+    </select>
+
+</mapper>

@@ -20,7 +20,7 @@ public interface CollectionDao {
      * @param userId 用户ID
      * @param gameId gameId
      */
-    void deleteCollection(String userId, int gameId);
+    void deleteCollection(String userId, int gameId, int collectionType);
 
     /**
      * 查询用户的所有收藏
@@ -28,7 +28,7 @@ public interface CollectionDao {
      * @param userId 用户ID
      * @return 收藏记录
      */
-    List<CollectionResponseEntity> queryCollectionByUser(String userId);
+    List<CollectionResponseEntity> queryCollectionByUser(String userId, int collectionType);
 
     /**
      * 查询某一条收藏记录
@@ -37,5 +37,5 @@ public interface CollectionDao {
      * @param gameId gameId
      * @return 收藏信息
      */
-    CollectionResponseEntity queryCollection(String userId, int gameId);
+    CollectionResponseEntity queryCollection(String userId, int gameId, int collectionType);
 }

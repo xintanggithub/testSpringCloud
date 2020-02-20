@@ -3,15 +3,17 @@ package com.tson.yd.model.collection;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Date;
+
 @ApiModel(description = "收藏实体类")
 public class CollectionResponseEntity extends CollectionEntity {
 
     @ApiModelProperty(value = "自增长ID")
     private int id;
     @ApiModelProperty(value = "创建时间")
-    private long createTime;
+    private Date createTime;
     @ApiModelProperty(value = "更新时间")
-    private long updateTime;
+    private Date updateTime;
 
     public int getId() {
         return id;
@@ -21,20 +23,19 @@ public class CollectionResponseEntity extends CollectionEntity {
         this.id = id;
     }
 
-    public long getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public long getUpdateTime() {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(long updateTime) {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
 }
