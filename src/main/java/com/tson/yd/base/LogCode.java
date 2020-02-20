@@ -13,9 +13,12 @@ public enum LogCode {
     RC_QUERY_EMAIL_ERROR(3305, "email code is empty"),
     RC_VERIFICATION_CODE_SEND_ERROR(3306, "VerificationCode send error"),
     RC_VERIFICATION_CODE_ERROR(3307, "VerificationCode error"),
-    RC_BOOK_CONTENT_IS_EMPTY(3308,"The information does not exist"),
+    RC_BOOK_CONTENT_IS_EMPTY(3308, "The information does not exist"),
     RC_SUCCESS(200, "success"),
-    RC_RETRY_START(3401,"We've already rated stars");
+    RC_RETRY_START(3401, "We've already rated stars"),
+    RC_ALREADY_EXISTS(4401, "Collection already exists"),
+    RC_ALREADY_NO_EXISTS(4402, "Collection does not exist");
+
 
     private int code;
     private String message;

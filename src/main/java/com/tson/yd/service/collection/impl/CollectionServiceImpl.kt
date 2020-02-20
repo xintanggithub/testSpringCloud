@@ -28,8 +28,13 @@ class CollectionServiceImpl : CollectionService {
         if (request.userId.isEmpty() || request.collectionType == -1 || request.gameId == -1) {
             return response.also { it.setStatus(LogCode.RC_PARAMETER_ERROR) }
         }
-        collectionDao.insertCollection(request)
-        return response.also { it.setStatus(LogCode.RC_SUCCESS) }
+        val resultResponse = queryCollection(request.userId, request.gameId, request.collectionType)
+        return if (resultResponse.resultCode == LogCode.RC_SUCCESS.code) {
+            response.also { it.setStatus(LogCode.RC_ALREADY_EXISTS) }
+        } else {
+            collectionDao.insertCollection(request)
+            response.also { it.setStatus(LogCode.RC_SUCCESS) }
+        }
     }
 
     override fun deleteCollection(userId: String, gameId: Int, collectionType: Int): BaseResponse<Any> {
@@ -37,8 +42,13 @@ class CollectionServiceImpl : CollectionService {
         if (userId.isEmpty() || gameId == -1) {
             return response.also { it.setStatus(LogCode.RC_PARAMETER_ERROR) }
         }
-        collectionDao.deleteCollection(userId, gameId, collectionType)
-        return response.also { it.setStatus(LogCode.RC_SUCCESS) }
+        val resultResponse = queryCollection(userId, gameId, collectionType)
+        return if (resultResponse.resultCode == LogCode.RC_SUCCESS.code) {
+            collectionDao.deleteCollection(userId, gameId, collectionType)
+            return response.also { it.setStatus(LogCode.RC_SUCCESS) }
+        } else {
+            response.also { it.setStatus(LogCode.RC_ALREADY_NO_EXISTS) }
+        }
     }
 
     override fun queryCollectionByUser(userId: String, collectionType: Int, page: Int, pageSize: Int): BaseResponse<ListBaseData<CollectionResponseEntity>> {
