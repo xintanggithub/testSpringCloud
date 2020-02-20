@@ -3,6 +3,7 @@ package com.tson.yd.controller
 import com.tson.yd.base.BaseResponse
 import com.tson.yd.base.ListBaseData
 import com.tson.yd.model.game.GameEntity
+import com.tson.yd.model.game.GameResponseEntity
 import com.tson.yd.model.game.request.GameRequest
 import com.tson.yd.service.game.GameService
 import io.swagger.annotations.Api
@@ -41,6 +42,19 @@ class GameController {
                   @ApiParam(required = true, name = "pageSize", value = "页码")
                   @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<GameEntity>> {
         return gameService.queryList(keyword, page, pageSize)
+    }
+
+    @RequestMapping(value = ["/queryListToCollection"], method = [RequestMethod.GET])
+    @ApiOperation(value = "查询game", notes = "v1.0.0")
+    fun queryListToCollection(@ApiParam(required = false, name = "keyword", value = "关键词")
+                  @RequestParam(value = "keyword", required = false) keyword: String?,
+                  @ApiParam(required = true, name = "userId", value = "userId")
+                  @RequestParam(value = "userId", required = true) userId: String,
+                  @ApiParam(required = true, name = "page", value = "页码")
+                  @RequestParam(value = "page", required = true) page: Int,
+                  @ApiParam(required = true, name = "pageSize", value = "页码")
+                  @RequestParam(value = "pageSize", required = true) pageSize: Int): BaseResponse<ListBaseData<GameResponseEntity>> {
+        return gameService.queryListToCollection(keyword, userId, page, pageSize)
     }
 
 }
